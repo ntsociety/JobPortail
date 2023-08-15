@@ -1,25 +1,16 @@
 @extends('layouts.company')
 @section('content')
 
- <!-- HOME -->
- <section class="section-hero overlay inner-page bg-image" style="background-image: url('{{ asset('frontend/images/hero_1.jpg') }}');" id="home-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-7">
-          <h1 class="text-white font-weight-bold">Entreprise | Mettre à Jour Votre profile</h1>
-          <div class="custom-breadcrumbs">
-            <a href="#">Home</a> <span class="mx-2 slash">/</span>
-            <a href="#">Job</a> <span class="mx-2 slash">/</span>
-            <span class="text-white"><strong>Post a Job</strong></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
 
 <section class="site-section">
     <div class="container">
+        <div class="card-header bg-main text-light p-3">
+            <h4>Modifier votre profile
+                <a href="{{ route('company-profile') }}" class="float-end btn btn-danger">Retour</a>
+            </h4>
+        </div>
       <div class="row mb-5">
         <div class="col-lg-12">
           <form class="p-4 p-md-5 border rounded" action="{{ route('become-company-store') }}" method="post" enctype="multipart/form-data">

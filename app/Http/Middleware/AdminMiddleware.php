@@ -24,7 +24,7 @@ class AdminMiddleware
             }
             elseif(Auth::user()->role == 'recruteur')
             {
-                return redirect()->route('company-profile');
+                return redirect()->route('company-dashboard');
             }
             else
             {

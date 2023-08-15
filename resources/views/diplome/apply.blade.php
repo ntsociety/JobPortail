@@ -57,7 +57,10 @@
 
             <div class="form-group">
                 @if(Auth::user()->diplome->cv)
-                <p>Votre CV actuel<a href="{{ asset('assets/diplomé/cv/'.Auth::user()->diplome->cv )}}"> Cliquer ICI</a></p>
+                {{-- <p>Votre CV actuel<a href="{{ asset('assets/diplomé/cv/'.Auth::user()->diplome->cv )}}"> Cliquer ICI</a></p> --}}
+                {{-- <embed src="{{ asset('assets/diplomé/cv/'.Auth::user()->diplome->cv )}}" height="500" width="1000"> --}}
+                {{-- <iframe src="{{ asset('assets/diplomé/cv/'.Auth::user()->diplome->cv )}}" width="100%" height="600px"></iframe> --}}
+
                 @endif
                 <label for="">Changer</label>
                 <input name="cv" type="file"
@@ -67,14 +70,8 @@
                 class="form-control" id="" placeholder="e.g. 20-12-2022">
             </div>
 
+            <button type="submit" name="submit" class="btn btn-block btn-primary btn-md"  value="Save Job">Postuler</button>
 
-            <div class="col-lg-4 ml-auto">
-                <div class="row">
-                  <div class="col-6">
-                    <button type="submit" name="submit" class="btn btn-block btn-primary btn-md" style="margin-left: 200px;" value="Save Job">Postuler</button>
-                  </div>
-                </div>
-            </div>
 
 
           </form>

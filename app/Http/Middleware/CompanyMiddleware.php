@@ -18,9 +18,13 @@ class CompanyMiddleware
     {
         if (Auth::check())
         {
-            if (auth()->user()->role == 'recruteur' or Auth::user()->is_admin)
+            if (auth()->user()->role == 'recruteur')
             {
                 return $next($request);
+            }
+            elseif(Auth::user()->is_admin)
+            {
+                return redirect()->route('admin-dashboard');
             }
             else
             {

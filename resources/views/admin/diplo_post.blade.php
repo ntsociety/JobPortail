@@ -1,4 +1,4 @@
-@extends('layouts.company')
+@extends('layouts.admin')
 @section('content')
 <style>
     a{
@@ -32,7 +32,7 @@
                 <td>
                     <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 fw-bold "><a href="{{ route('camp_diplôme_profile',$item->user->diplome->slug) }}">{{ $item->user->diplome->name }}</a></h6>
+                            <h6 class="mb-0 fw-bold "><a href="{{ route('diplôme_profile',$item->user->diplome->slug) }}">{{ $item->user->diplome->name }}</a></h6>
                         </div>
                     </div>
                 </td>

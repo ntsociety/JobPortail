@@ -1,4 +1,4 @@
-@extends('layouts.company')
+@extends('layouts.admin')
 @section('content')
 <style>
     a{
@@ -12,7 +12,7 @@
  <!-- table -->
  <div class="container t-repons mycontent">
     <div class="card-header bg-main text-light rounded-2 px-3 py-3">
-      <h4> Liste des diplômés postulés
+      <h4> Liste des diplômés | <span >{{ $diplome->count() }}</span>
       </h4>
     </div>
     <div class="respon">
@@ -32,7 +32,7 @@
                 <td>
                     <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 fw-bold "><a href="{{ route('camp_diplôme_profile',$item->user->diplome->slug) }}">{{ $item->user->diplome->name }}</a></h6>
+                            <h6 class="mb-0 fw-bold "><a href="{{ route('diplôme_profile',$item->user->diplome->slug) }}">{{ $item->user->diplome->name }}</a></h6>
                         </div>
                     </div>
                 </td>

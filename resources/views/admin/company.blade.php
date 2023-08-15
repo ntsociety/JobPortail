@@ -1,4 +1,4 @@
-@extends('layouts.company')
+@extends('layouts.admin')
 @section('content')
 <style>
     a{
@@ -12,7 +12,7 @@
  <!-- table -->
  <div class="container t-repons mycontent">
     <div class="card-header bg-main text-light rounded-2 px-3 py-3">
-      <h4> Liste des diplômés postulés
+      <h4> Liste des Entreprises | <span >{{ $company->count() }}</span>
       </h4>
     </div>
     <div class="respon">
@@ -20,26 +20,26 @@
         <thead class="bg-main text-light">
           <tr>
             <th>Nom</th>
-            <th>Prénom</th>
+            <th>Email</th>
             <th>Téléphone</th>
-            <th>Profession</th>
-            <th>CV</th>
+            <th>Domaine</th>
+            <th>Agrement</th>
           </tr>
         </thead>
         <tbody class="bg-light">
-            @foreach ($diplome as $item)
+            @foreach ($company as $item)
             <tr class="align-middle">
                 <td>
                     <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 fw-bold "><a href="{{ route('camp_diplôme_profile',$item->user->diplome->slug) }}">{{ $item->user->diplome->name }}</a></h6>
+                            <h6 class="mb-0 fw-bold "><a href="{{ route('company_prof',$item->slug) }}">{{ $item->name }}</a></h6>
                         </div>
                     </div>
                 </td>
-                <td>{{ $item->user->diplome->f_name }}</td>
-                <td>{{ $item->user->diplome->phone }}</td>
-                <td>{{ $item->user->diplome->domain }}</td>
-                <td>cv</td>
+                <td>{{ $item->email }}</td>
+                <td>{{ $item->phone }}</td>
+                <td>{{ $item->domain }}</td>
+                <td>{{ $item->register_num }}</td>
             </tr>
             @endforeach
         </tbody>

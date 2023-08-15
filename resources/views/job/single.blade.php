@@ -78,9 +78,15 @@
                     @endif
                 <!--add text-danger to it to make it read-->
                 </div>
+                @if ($applied)
                 <div class="col-6">
-                <a href="{{ route('post_job',$job->slug) }}" class="btn btn-block btn-primary btn-md">Apply Now</a href="{{ route('post_job',$job) }}">
+                    <a href="" class="btn btn-block btn-primary btn-md disabled">Déjà Postulé</a href="{{ route('post_job',$job) }}">
                 </div>
+                @else
+                <div class="col-6">
+                    <a href="{{ route('post_job',$job->slug) }}" class="btn btn-block btn-primary btn-md">Postulé maintenant</a href="{{ route('post_job',$job) }}">
+                </div>
+                @endif
             </div>
 
             </div>

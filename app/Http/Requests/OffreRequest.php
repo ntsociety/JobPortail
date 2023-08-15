@@ -22,10 +22,11 @@ class OffreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=> ['required', 'string', 'max:value'],
+            'title'=> ['required', 'string', 'max:50'],
+            'cate_id'=> ['numeric'],
             'region'=> ['required', 'string', 'max:50'],
             'type'=> ['required', 'string', 'max:20'],
-            'vacancy'=> ['required', 'numeric', 'digits:3'],
+            'vacancy'=> ['required', 'numeric', 'max:3'],
             'experience'=>['required', 'string', 'max:50'],
             'salary'=>['required', 'string', 'max:50'],
             'gender'=>['required', 'string', 'max:50'],

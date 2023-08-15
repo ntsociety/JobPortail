@@ -22,5 +22,11 @@ class Controller extends BaseController
         $job = Job::orderBy('created_at', 'desc')->get();
         return view('jobs-listes', compact('job'));
     }
+    public function pdfView()
+    {
+        // $pdfPath = public_path('assets/diplomé/cv/'.Auth::user()->diplome->cv);
+        // dd($pdfPath);
+        return view('pdf_view');
+    }
 
 }

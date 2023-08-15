@@ -18,6 +18,24 @@
         </a>
       </li>
       <li>
+        <a href="{{ route('emplois.index') }}">
+          <i class="bx bx-grid-alt"></i>
+          <span class="links_name">Emplois</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('diplomer') }}">
+          <i class="bx bx-user"></i>
+          <span class="links_name">Diplômés</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('company') }}">
+          <i class="bx bx-user"></i>
+          <span class="links_name">Entreprises</span>
+        </a>
+      </li>
+      <li>
         <a href="#">
           <i class="bx bx-box"></i>
           <span class="links_name">Produits</span>

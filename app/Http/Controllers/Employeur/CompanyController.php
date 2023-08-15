@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employeur;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Company_profile;
 use App\Models\Employe_profile;
 use App\Models\Job;
@@ -52,6 +53,10 @@ class CompanyController extends Controller
         $company->link_url = $data['linkedin'];
         $company->twit_url = $data['twitter'];
         $company->update();
+
+        Company::create([
+            'user_id' => Auth::id(),
+        ]);
         return redirect()->route('company-profile')->with('message', 'Merci pour votre confiance en nous !');
     }
     public function profile()
@@ -81,16 +86,15 @@ class CompanyController extends Controller
         }
 
     }
-    public function public_profile($slug)
+    public function diplome_profile($slug)
     {
         if(Employe_profile::where('slug', $slug)->exists())
         {
-            $diplome = Employe_profile::where('slug', $slug)->first();
-            return view('company.diplo_public_profile', compact('diplome', ));
-        }
-        else
+            $profile = Employe_profile::where('slug', $slug)->first();
+            return view('company.diplo_public_profile', compact('profile'));
+        } else
         {
-            return redirect('/')->with('status', "slug n'existe pas");
+            return redirect()->back()->with('status', "slug n'existe pas");
         }
     }
     public function prof_public($slug)

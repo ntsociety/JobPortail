@@ -33,6 +33,10 @@ class LoginController extends Controller
         {
             return redirect()->route('admin-dashboard');
         }
+        elseif(auth()->user() && auth()->user()->role == 'recruteur')
+        {
+            return redirect()->route('company-dashboard');
+        }
         else{
             return redirect('/');
         }

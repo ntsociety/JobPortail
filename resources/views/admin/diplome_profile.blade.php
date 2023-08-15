@@ -1,4 +1,4 @@
-@extends('layouts.company')
+@extends('layouts.admin')
 @section('content')
 <style>
     .diplome_profile{

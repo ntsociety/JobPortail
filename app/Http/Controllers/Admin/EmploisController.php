@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Employeur;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OffreRequest;
 use App\Models\Category;
 use App\Models\Job;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
-class OffreControlleur extends Controller
+class EmploisController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class OffreControlleur extends Controller
     public function index()
     {
         $offre = Job::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
-        return view('company.offres.index', compact('offre'));
+        return view('admin.emplois.index', compact('offre'));
     }
 
     /**
@@ -27,7 +27,7 @@ class OffreControlleur extends Controller
     public function create()
     {
         $category = Category::where('id', '!=', 1)->orderBy('created_at', 'desc')->get();
-        return view('company.offres.create', compact('category'));
+        return view('admin.emplois.create', compact('category'));
     }
 
     /**
@@ -35,27 +35,6 @@ class OffreControlleur extends Controller
      */
     public function store(OffreRequest $request)
     {
-        /*
-
-        g('slug');
-        g('title');
-        g('campany')->nullable
-        g('region')->nullable(
-        g('type')->nullable();
-        g('vacancy')->nullable
-        g('experience')->nulla
-        g('salary')->nullable(
-        g('gender')->nullable(
-        g('apps_deadline')->nu
-        'description')->nullab
-        'responsibilities')->n
-        'education_experience'
-        'other_benifits')->nul
-        g('cover')->nullable()
-        an('is_available')->de
-        an('is_verify')->defau
-
-        */
         $data = $request->validated();
         // dd($data);
         $job = new Job();
@@ -77,7 +56,7 @@ class OffreControlleur extends Controller
         $job->education_experience = $data['education_experience'];
         $job->other_benifits = $data['other_benifits'];
         $job->save();
-        return redirect()->route('offres.index')->with('message', 'offre ajouté avec succès!');
+        return redirect()->route('emplois.index')->with('message', 'offre ajouté avec succès!');
     }
 
     /**
@@ -100,7 +79,7 @@ class OffreControlleur extends Controller
             {
                 $job = Job::where('slug', $slug)->where('user_id', Auth::id())->first();
                 $category = Category::orderBy('created_at', 'desc')->where('id', '!=', 1)->get();
-                return view('company.offres.edit', compact('job', 'category'));
+                return view('admin.emplois.edit', compact('job', 'category'));
             } else{
                 return redirect()->back()->with('status', "action non autorisée");
             }
@@ -113,7 +92,7 @@ class OffreControlleur extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(OffreRequest $request, $id)
+    public function update(OffreRequest $request, string $id)
     {
         $job = Job::findOrFail($id);
         if($job->user_id == Auth::id())
@@ -139,13 +118,11 @@ class OffreControlleur extends Controller
             $job->other_benifits = $data['other_benifits'];
             $job->is_available = $request->input('is_available') == True ? '1':'0';
             $job->update();
-            return redirect()->route('offres.index')->with('message', 'offre Modifié avec succès!');
+            return redirect()->route('emplois.index')->with('message', 'offre Modifié avec succès!');
         }
         else{
             return redirect()->back()->with('status', "action non autorisée");
         }
-
-
     }
 
     /**

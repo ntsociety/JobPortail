@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminControlleur;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\EmploisController;
 use App\Http\Controllers\Diplomé\DiplomeController;
 use App\Http\Controllers\Employeur\CompanyController;
 use App\Http\Controllers\Employeur\OffreControlleur;
@@ -34,6 +35,16 @@ Route::middleware(['auth', 'isAdmin'])->group(function(){
         Route::get('/', [AdminControlleur::class, 'index'])->name('admin-dashboard');
         // category
         Route::resource('category', CategoryController::class);
+        // emplois
+        Route::resource('emplois', EmploisController::class);
+        // diplômés
+        Route::get('diplômé-postulés/{slug}', [AdminControlleur::class, 'diplo_post'])->name('admin-diplo_post');
+        Route::get('diplômés', [AdminControlleur::class, 'diplomer'])->name('diplomer');
+        Route::get('profile-diplômé/{slug}', [AdminControlleur::class, 'diplôme_profile'])->name('diplôme_profile');
+        // company
+        Route::get('entreprises', [AdminControlleur::class, 'company'])->name('company');
+        Route::get('entreprise/{slug}/profile', [AdminControlleur::class, 'company_prof'])->name('company_prof');
+
     });
 });
 
@@ -61,6 +72,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/save_job/{id}', [JobControlleur::class, 'save_job'])->name('save_job');
     Route::get('/postulé-job/{slug}', [JobControlleur::class, 'post_job'])->name('post_job');
     Route::post('/apply_job/{id}', [JobControlleur::class, 'apply_job'])->name('apply_job');
+    // pdf view
+    Route::get('pdf_view', [App\Http\Controllers\Controller::class, 'pdfView'])->name('pdf_view');
+
 });
 
 
@@ -76,13 +90,19 @@ Route::middleware(['auth', 'isCompany'])->group(function(){
         Route::get('mettre-à-jour-profile', [CompanyController::class, 'update_profil'])->name('company-update_profil');
 
         // company offres
-        Route::get('offres', [CompanyController::class, 'offres'])->name('company-offres');
+        Route::get('mes-offres', [CompanyController::class, 'offres'])->name('company-offres');
+
         // offres user applied
-        Route::get('offres/{slug}/diplômé-postulés', [CompanyController::class, 'user_applied'])->name('job_user_applied');
+        Route::get('offres-job/{slug}/diplômé-postulés', [CompanyController::class, 'user_applied'])->name('job_user_applied');
+        Route::get('diplomés/{slug}/profile', [CompanyController::class, 'diplome_profile'])->name('camp_diplôme_profile');
+
+        // offres
+        Route::resource('offres', OffreControlleur::class);
+
     });
-    // offres
-    Route::resource('offres', OffreControlleur::class);
+
     // diplômé profile public
+
     Route::get('profile-public/{slug}/', [CompanyController::class, 'public_profile'])->name('comp_diplome-public_profile');
 });
 

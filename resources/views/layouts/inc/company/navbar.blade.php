@@ -9,9 +9,21 @@
           <i class="bx bx-user"></i>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark bg-main" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item fw-bold text-light" href="#">Name</a></li>
+          <li><a class="dropdown-item fw-bold text-light" href="#">Profile</a></li>
+          <li><a class="dropdown-item fw-bold text-light" href="#">Compte et sécurité</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item fw-bold text-light" href="#">Déconnexion</a></li>
+          <li>
+            <a class="dropdown-item fw-bold text-light" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                {{ __('Déconnexion') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+          </li>
         </ul>
     </div>
-  </nav>
+
+ </nav>

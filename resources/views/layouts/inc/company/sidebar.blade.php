@@ -12,15 +12,21 @@
         </a>
       </li>
       <li>
-        <a href="{{ route('category.index') }}">
+        <a href="{{ route('offres.index') }}">
           <i class="bx bx-grid-alt"></i>
-          <span class="links_name">Catégories</span>
+          <span class="links_name">Offres</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('company-offres') }}">
+          <i class="bx bx-grid-alt"></i>
+          <span class="links_name">Mes Offres</span>
         </a>
       </li>
       <li>
         <a href="#">
           <i class="bx bx-box"></i>
-          <span class="links_name">Produits</span>
+          <span class="links_name">Diplômés</span>
         </a>
       </li>
       <li>

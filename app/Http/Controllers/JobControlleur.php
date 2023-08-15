@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OffrePostuleEmail;
 use App\Models\Apply;
 use App\Models\Category;
 use App\Models\Employe_profile;
 use App\Models\Job;
 use App\Models\SaveJob;
 use App\Models\Search;
+use App\Models\UserApply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class JobControlleur extends Controller
 {
@@ -26,7 +29,8 @@ class JobControlleur extends Controller
             $job = Job::where('slug', $slug)->first();
             $job_relat = Job::where('cate_id', $job->cate_id)->where('id', '!=', $job->id)->orderBy('created_at', 'desc')->take(5)->get();
             $saved = SaveJob::where('job_id', $job->id)->where('user_id', Auth::id())->first();
-            return view('job.single', compact('job', 'job_relat', 'saved', 'category'));
+            $applied = Apply::where('job_id', $job->id)->where('diplomer_id', Auth::id())->first();
+            return view('job.single', compact('job', 'job_relat', 'saved', 'category', 'applied'));
         }
         else
         {
@@ -58,6 +62,7 @@ class JobControlleur extends Controller
     {
         $employ = Employe_profile::find(Auth::id());
         $job = Job::find($id);
+
         $apply_job = new Apply();
         $apply_job->company_id = $job->user_id;
         if($employ->cv)
@@ -89,6 +94,15 @@ class JobControlleur extends Controller
         $apply_job->diplomer_id = Auth::id();
         $apply_job->job_id = $id;
         $apply_job->save();
+
+        // user apply info
+        $user_apply = ([
+            "Nom Complet" => Auth::user()->name." " . Auth::user()->diplome->f_name,
+            "A propos" => Auth::user()->diplome->about
+        ]);
+        $company_email = $job->user->company->email;
+        // send mail
+        Mail::to("$company_email")->send(new OffrePostuleEmail($user_apply));
         return redirect()->back()->with('message', 'Job postulé avec succès!');
     }
     public function viewcategory($slug)

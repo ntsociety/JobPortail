@@ -64,9 +64,6 @@
                             <a href="https://www.facebook.com/{{ $profil->twit_url }}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
                             <a href="https://www.facebook.com/{{ $profil->link_url }}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
