@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Apply;
+use App\Models\Category;
 use App\Models\Company_profile;
 use App\Models\Employe_profile;
 use App\Models\Job;
@@ -17,15 +19,10 @@ class AdminControlleur extends Controller
     }
     public function diplo_post($slug)
     {
-        if(Job::where('slug', $slug)->exists())
-        {
-            $job = Job::where('slug', $slug)->first();
-            $diplome = UserApply::where('job_id', $job->id)->orderBy('created_at', 'desc')->get();
-            return view('admin.diplo_post', compact('diplome'));
-        } else
-        {
-            return redirect()->back()->with('status', "slug n'existe pas");
-        }
+        $job = Job::where('slug', $slug)->firstOrFail();
+        $diplome = UserApply::where('job_id', $job->id)->orderBy('created_at', 'desc')->get();
+        return view('admin.diplo_post', compact('diplome'));
+
     }
     public function diplomer()
     {
@@ -34,14 +31,9 @@ class AdminControlleur extends Controller
     }
     public function diplôme_profile($slug)
     {
-        if(Employe_profile::where('slug', $slug)->exists())
-        {
-            $profile = Employe_profile::where('slug', $slug)->first();
-            return view('admin.diplome_profile', compact('profile'));
-        } else
-        {
-            return redirect()->back()->with('status', "slug n'existe pas");
-        }
+         $profile = Employe_profile::where('slug', $slug)->firstOrFail();
+        return view('admin.diplome_profile', compact('profile'));
+
     }
     public function company()
     {
@@ -50,14 +42,27 @@ class AdminControlleur extends Controller
     }
     public function company_prof($slug)
     {
-        if(Company_profile::where('slug', $slug)->exists())
-        {
-            $profile = Company_profile::where('slug', $slug)->first();
-            return view('admin.company_profile', compact('profile'));
-        } else
-        {
-            return redirect()->back()->with('status', "slug n'existe pas");
-        }
+        $profile = Company_profile::where('slug', $slug)->firstOrFail();
+        return view('admin.company_profile', compact('profile'));
+
+    }
+    public function view_apply($slug)
+    {
+        $apply = Apply::where('app_num', $slug)->firstOrFail();
+        // dd($apply->diplome->name);
+        return view('email.postule_email', compact('apply'));
+
+    }
+    public function jobs()
+    {
+        $job = Job::orderBy('created_at', 'desc')->get();
+        return view('admin.jobs', compact('job'));
+    }
+    public function single_job($slug)
+    {
+        $job = Job::where('slug', $slug)->firstOrFail();
+        $category = Category::orderBy('created_at', 'desc')->where('id', '!=', 1)->get();
+        return view('admin.single_job', compact('job', 'category'));
     }
 
 }

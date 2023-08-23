@@ -85,25 +85,63 @@ class JobControlleur extends Controller
             // $filename = time().'.'.$ext;
 
             // $file->move('assets/diplomé/cv/',$cvName);
-            $file->move('assets/diplomé/postule/joints/',$cvName);
+            $file->move('assets/diplomé/cv/',$cvName);
             $apply_job->cv = $cvName;
+
         }
         else{
             $apply_job->cv =$employ->cv;
+
         }
+
+        // dd($cv_path);
+
+
+
         $apply_job->diplomer_id = Auth::id();
         $apply_job->job_id = $id;
+        $apply_job->app_num = rand(1111, 9999);
         $apply_job->save();
 
         // user apply info
-        $user_apply = ([
-            "Nom Complet" => Auth::user()->name." " . Auth::user()->diplome->f_name,
-            "A propos" => Auth::user()->diplome->about
-        ]);
+        $apply = Apply::where('app_num', $apply_job->app_num)->first();
         $company_email = $job->user->company->email;
+        $file_path =  'assets/diplomé/cv/'.$apply->cv;
+        // dd($company_email);
+        // dd($cv_path);
+        $data = [
+            'company_name' => $apply->company->name,
+            'diplomer_name' => $apply->diplomer->name,
+            'diplomer_f_name' => $apply->diplomer->f_name,
+            'diplomer_exp_years' => $apply->diplomer->experience_years,
+            'diplomer_bio' => $apply->diplomer->bio,
+            'diplomer_slug' => $apply->diplomer->slug,
+        ];
+        // dd($data);
+
         // send mail
-        Mail::to("$company_email")->send(new OffrePostuleEmail($user_apply));
-        return redirect()->back()->with('message', 'Job postulé avec succès!');
+        $files = [
+            public_path('assets/diplomé/cv/'.$apply->cv),
+        ];
+
+
+
+        try{
+            // Mail::to("$company_email")->send(new OffrePostuleEmail($apply, $file_path));
+            Mail::send('email.postule_email', $data, function($message)use($company_email, $file_path) {
+                $message->to($company_email)
+                        ->subject('Nouveau Candidat');
+
+                    $message->attach($file_path);
+                // foreach ($files as $file){
+                //     $message->attach($file);
+                // }
+            });
+            return redirect()->back()->with('message', 'Job postulé avec succès!');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', "Quelques choses s'est mal passé! $e");
+        }
+
     }
     public function viewcategory($slug)
     {

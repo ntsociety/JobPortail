@@ -9,19 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OffrePostuleEmail extends Mailable
+class SendEmailContact extends Mailable
 {
     use Queueable, SerializesModels;
+    public $single_contact;
 
-    public $apply;
-    public $file_path;
     /**
      * Create a new message instance.
      */
-    public function __construct($apply, $file_path)
+    public function __construct($single_contact)
     {
-        $this->apply = $apply;
-        $this->file_path = $file_path;
+        $this->single_contact = $single_contact;
     }
 
     /**
@@ -30,7 +28,7 @@ class OffrePostuleEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Nouveau Candidat",
+            subject: $this->single_contact->sujet,
         );
     }
 
@@ -40,7 +38,7 @@ class OffrePostuleEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.postule_email',
+            view: 'email.company_send_user',
         );
     }
 
@@ -51,11 +49,6 @@ class OffrePostuleEmail extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            $this->file_path => [
-                'as' => 'document.pdf',
-                'mime' => 'application/pdf',
-            ],
-        ];
+        return [];
     }
 }

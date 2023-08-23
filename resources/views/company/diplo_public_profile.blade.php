@@ -66,6 +66,7 @@
                     <a href="https://www.facebook.com/{{ $profile->twit_url }}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
                     <a href="https://www.facebook.com/{{ $profile->link_url }}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
                 </div>
+                <a href="{{ route('send_mail_user',$profile->slug) }}" class="btn btn-primary">Envoyer lui un message</a>
             </div>
         </div>
     </div>

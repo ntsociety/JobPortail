@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applies', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('diplomer_id');
-            $table->unsignedBigInteger('job_id');
-            $table->string('app_num')->nullable();
-            $table->string('cv')->nullable();
+            $table->string('sujet')->nullable();
+            $table->text('message')->nullable();
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('company_profiles')->onDelete('cascade');
             $table->foreign('diplomer_id')->references('id')->on('employe_profiles')->onDelete('cascade');
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applies');
+        Schema::dropIfExists('contacts');
     }
 };

@@ -93,57 +93,41 @@ class OffreControlleur extends Controller
      */
     public function edit(string $slug)
     {
-        if(Job::where('slug', $slug)->exists())
-        {
-            $job = Job::where('slug', $slug)->first();
-            if($job->user_id == Auth::id())
-            {
-                $job = Job::where('slug', $slug)->where('user_id', Auth::id())->first();
-                $category = Category::orderBy('created_at', 'desc')->where('id', '!=', 1)->get();
-                return view('company.offres.edit', compact('job', 'category'));
-            } else{
-                return redirect()->back()->with('status', "action non autorisée");
-            }
-        } else
-        {
-            return redirect()->back()->with('status', "slug n'existe pas");
-        }
+        $job = Job::where('slug', $slug)->where('user_id', Auth::id())->firstOrFail();
+        $category = Category::orderBy('created_at', 'desc')->where('id', '!=', 1)->get();
+        return view('company.offres.edit', compact('job', 'category'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(OffreRequest $request, $id)
+    public function update(OffreRequest $request, $slug)
     {
-        $job = Job::findOrFail($id);
-        if($job->user_id == Auth::id())
-        {
-            $data = $request->validated();
+        $job = Job::where('slug', $slug)->where('user_id', Auth::id())->firstOrFail();
+         $data = $request->validated();
             // dd($data);
 
 
-            $job->title = $data['title'];
-            $job->cate_id = $data['cate_id'];
-            // $job->title = $data['campany'];
-            $job->slug = Str::slug($data['title']);
-            $job->region = $data['region'];
-            $job->type = $data['type'];
-            $job->vacancy = $data['vacancy'];
-            $job->experience = $data['experience'];
-            $job->salary = $data['salary'];
-            $job->gender = $data['gender'];
-            $job->apps_deadline = $data['apps_deadline'];
-            $job->description = $data['description'];
-            $job->responsibilities = $data['responsibilities'];
-            $job->education_experience = $data['education_experience'];
-            $job->other_benifits = $data['other_benifits'];
-            $job->is_available = $request->input('is_available') == True ? '1':'0';
-            $job->update();
-            return redirect()->route('offres.index')->with('message', 'offre Modifié avec succès!');
-        }
-        else{
-            return redirect()->back()->with('status', "action non autorisée");
-        }
+        $job->title = $data['title'];
+        $job->cate_id = $data['cate_id'];
+        // $job->title = $data['campany'];
+        $job->slug = Str::slug($data['title']);
+        $job->region = $data['region'];
+        $job->type = $data['type'];
+        $job->vacancy = $data['vacancy'];
+        $job->experience = $data['experience'];
+        $job->salary = $data['salary'];
+        $job->gender = $data['gender'];
+        $job->apps_deadline = $data['apps_deadline'];
+        $job->description = $data['description'];
+        $job->responsibilities = $data['responsibilities'];
+        $job->education_experience = $data['education_experience'];
+        $job->other_benifits = $data['other_benifits'];
+        $job->is_available = $request->input('is_available') == True ? '1':'0';
+        $job->update();
+        return redirect()->route('offres.index')->with('message', 'offre Modifié avec succès!');
+
 
 
     }

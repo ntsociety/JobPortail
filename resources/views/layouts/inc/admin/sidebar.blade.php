@@ -36,6 +36,12 @@
         </a>
       </li>
       <li>
+        <a href="{{ route('jobs') }}">
+          <i class="bx bx-user"></i>
+          <span class="links_name">Tous les Jobs</span>
+        </a>
+      </li>
+      <li>
         <a href="#">
           <i class="bx bx-box"></i>
           <span class="links_name">Produits</span>

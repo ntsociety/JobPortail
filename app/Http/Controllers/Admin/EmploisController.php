@@ -42,7 +42,6 @@ class EmploisController extends Controller
 
 
         $job->title = $data['title'];
-        // $job->title = $data['campany'];
         $job->slug = Str::slug($data['title']);
         $job->region = $data['region'];
         $job->type = $data['type'];
@@ -72,29 +71,17 @@ class EmploisController extends Controller
      */
     public function edit(string $slug)
     {
-        if(Job::where('slug', $slug)->exists())
-        {
-            $job = Job::where('slug', $slug)->first();
-            if($job->user_id == Auth::id())
-            {
-                $job = Job::where('slug', $slug)->where('user_id', Auth::id())->first();
-                $category = Category::orderBy('created_at', 'desc')->where('id', '!=', 1)->get();
-                return view('admin.emplois.edit', compact('job', 'category'));
-            } else{
-                return redirect()->back()->with('status', "action non autorisée");
-            }
-        } else
-        {
-            return redirect()->back()->with('status', "slug n'existe pas");
-        }
+        $job = Job::where('slug', $slug)->where('user_id', Auth::id())->firstOrFail();
+        $category = Category::orderBy('created_at', 'desc')->where('id', '!=', 1)->get();
+        return view('admin.emplois.edit', compact('job', 'category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(OffreRequest $request, string $id)
+    public function update(OffreRequest $request, string $slug)
     {
-        $job = Job::findOrFail($id);
+        $job = Job::where('slug', $slug)->where('user_id', Auth::id())->firstOrFail();
         if($job->user_id == Auth::id())
         {
             $data = $request->validated();

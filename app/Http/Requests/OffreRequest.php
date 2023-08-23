@@ -26,7 +26,7 @@ class OffreRequest extends FormRequest
             'cate_id'=> ['numeric'],
             'region'=> ['required', 'string', 'max:50'],
             'type'=> ['required', 'string', 'max:20'],
-            'vacancy'=> ['required', 'numeric', 'max:3'],
+            'vacancy'=> ['required', 'numeric'],
             'experience'=>['required', 'string', 'max:50'],
             'salary'=>['required', 'string', 'max:50'],
             'gender'=>['required', 'string', 'max:50'],

@@ -44,8 +44,14 @@ Route::middleware(['auth', 'isAdmin'])->group(function(){
         // company
         Route::get('entreprises', [AdminControlleur::class, 'company'])->name('company');
         Route::get('entreprise/{slug}/profile', [AdminControlleur::class, 'company_prof'])->name('company_prof');
+        // all job
+        Route::get('offres-des-emplois', [AdminControlleur::class, 'jobs'])->name('jobs');
+        Route::get('offre-d-emploi/{slug}', [AdminControlleur::class, 'single_job'])->name('view_job');
+
 
     });
+     // send email
+     Route::get('send_email/{slug}/candidat', [AdminControlleur::class, 'view_apply'])->name('view_apply');
 });
 
 
@@ -75,6 +81,7 @@ Route::middleware(['auth'])->group(function(){
     // pdf view
     Route::get('pdf_view', [App\Http\Controllers\Controller::class, 'pdfView'])->name('pdf_view');
 
+
 });
 
 
@@ -95,6 +102,9 @@ Route::middleware(['auth', 'isCompany'])->group(function(){
         // offres user applied
         Route::get('offres-job/{slug}/diplômé-postulés', [CompanyController::class, 'user_applied'])->name('job_user_applied');
         Route::get('diplomés/{slug}/profile', [CompanyController::class, 'diplome_profile'])->name('camp_diplôme_profile');
+        Route::get('company-diplomés/', [CompanyController::class, 'company_diplomer'])->name('company_diplomer');
+        Route::get('send-mail-to-user/{slug}', [CompanyController::class, 'send_mail_user'])->name('send_mail_user');
+        Route::post('send-mail-to-user_store', [CompanyController::class, 'send_mail_user_store'])->name('send_mail_user_store');
 
         // offres
         Route::resource('offres', OffreControlleur::class);

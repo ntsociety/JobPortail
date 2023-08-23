@@ -18,13 +18,7 @@
         </a>
       </li>
       <li>
-        <a href="{{ route('company-offres') }}">
-          <i class="bx bx-grid-alt"></i>
-          <span class="links_name">Mes Offres</span>
-        </a>
-      </li>
-      <li>
-        <a href="#">
+        <a href="{{ route('company_diplomer') }}">
           <i class="bx bx-box"></i>
           <span class="links_name">Diplômés</span>
         </a>

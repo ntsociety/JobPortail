@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('cate_id')->default('1');
             $table->string('slug');
             $table->string('title');
-            $table->string('campany')->nullable();
             $table->string('region')->nullable();
             $table->string('type')->nullable();
             $table->string('vacancy')->nullable();
@@ -29,7 +28,6 @@ return new class extends Migration
             $table->text('responsibilities')->nullable();
             $table->text('education_experience')->nullable();
             $table->text('other_benifits')->nullable();
-            $table->string('cover')->nullable();
             $table->boolean('is_available')->default('1');
             $table->boolean('is_verify')->default('0');
             $table->timestamps();

@@ -4,12 +4,12 @@
     <div class="container">
         <div class="card-header bg-main text-light p-3">
             <h4>Créer un offre
-                <a href="{{ route('offres.index') }}" class="float-end btn btn-danger">Retour</a>
+                <a href="{{ route('emplois.index') }}" class="float-end btn btn-danger">Retour</a>
             </h4>
         </div>
       <div class="row mb-5">
         <div class="col-lg-12">
-          <form class="p-4 p-md-5 border rounded" action="{{ route('offres.store') }}" method="post" enctype="multipart/form-data">
+          <form class="p-4 p-md-5 border rounded" action="{{ route('emplois.store') }}" method="post" enctype="multipart/form-data">
 
             <!--job details-->
             @csrf

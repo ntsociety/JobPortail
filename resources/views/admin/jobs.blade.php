@@ -12,8 +12,7 @@
  <!-- table -->
  <div class="container t-repons mycontent">
     <div class="card-header bg-main text-light rounded-2 px-3 py-3">
-      <h4> Liste de vos offres
-        <a href="{{ route('emplois.create') }}" class="float-end btn btn-primary">Ajouter</a>
+      <h4> Liste des offres d'emplois | <span class="badge badge-danger">{{ $job->count() }}</span>
       </h4>
     </div>
     <div class="respon">
@@ -25,19 +24,18 @@
             <th>Type</th>
             <th>Date limite</th>
             <th>Candidat</th>
-            <th>Valable</th>
-            <th>Action</th>
+            <th>Valable ?</th>
           </tr>
         </thead>
         <tbody class="bg-light">
-          @if ($offre->count() > 0)
-            @foreach ($offre as $item)
+          @if ($job->count() > 0)
+            @foreach ($job as $item)
             <tr class="align-middle">
                 <td>{{ $item->id }}</td>
                 <td>
                     <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 fw-bold "><a href="{{ route('emplois.edit',$item->slug) }}">{{ $item->title }}</a></h6>
+                            <h6 class="mb-0 fw-bold "><a href="{{ route('view_job',$item->slug) }}">{{ $item->title }}</a></h6>
                             <small class="mb-0">{{ $item->category->name }}</small>
                         </div>
                     </div>
@@ -46,7 +44,7 @@
                 <td>{{ $item->apps_deadline }}</td>
                 <td>
                     @if ($item->diplome->count() > 0)
-                        <a href="{{ route('admin-diplo_post',$item->slug) }}">{{ $item->diplome->count() }} Postulé@if($item->diplome->count() > 1)s @endif</a>
+                        <a href="{{ route('view_job',$item->slug) }}">{{ $item->diplome->count() }} Postulé@if($item->diplome->count() > 1)s @endif</a>
                     @else
                     pas encore postulé
                     @endif
@@ -57,14 +55,6 @@
                     @else
                     <h6 class="btn btn-danger btn-sm is_available">Non</h6>
                     @endif
-                </td>
-                <td class="">
-                    <form action="{{ route('emplois.destroy',$item->id) }}">
-                        @csrf
-                        @method('delete')
-                        <a href="{{ route('emplois.edit',$item->slug) }}" class="btn btn-sm bg-main text-light mx-1"><i class='bx bx-edit' ></i></a>
-                        {{-- <button class="btn btn-sm bg-danger text-light  mx-1" type="submit" onclick="return confirm('Voulez-vous supprimer cette catégorie?')"><i class='bx bx-trash'></i></button> --}}
-                    </form>
                 </td>
             </tr>
             @endforeach
