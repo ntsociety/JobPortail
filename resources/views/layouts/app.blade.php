@@ -16,6 +16,18 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+{{-- css --}}
+<style>
+    ul{
+        list-style: none;
+    }
+    a{
+        text-decoration: none !important;
+    }
+    .card{
+        border: none !important;
+    }
+</style>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">

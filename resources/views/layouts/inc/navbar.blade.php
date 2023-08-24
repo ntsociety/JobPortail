@@ -92,7 +92,7 @@
                             <a class="dropdown-item" href="{{ route('diplome-applied') }}"> {{ __('Offre postulé') }}</a>
                             <a class="dropdown-item" href="{{ route('become-company') }}"> {{ __('Devenir employeur') }}</a>
                             <a class="dropdown-item" href="{{ route('diplome-profil_public',Auth::user()->diplome->slug) }}">{{ __('Profile public') }} </a>
-                            <a class="dropdown-item" href="">{{ __('Compte et sécurité') }} </a>
+                            <a class="dropdown-item" href="{{ route('employe-account') }}">{{ __('Compte et sécurité') }} </a>
                         @endif
                         {{-- company route --}}
                         @if(Auth::user()->role == "recruteur")

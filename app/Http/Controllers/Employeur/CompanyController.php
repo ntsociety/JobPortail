@@ -46,7 +46,7 @@ class CompanyController extends Controller
             $company->logo = $imageName;
         }
         $company->name = $data['name'];
-        $company->slug = Str::slug($data['name']);
+        $company->slug = Str::slug($data['name']). strval(rand(1111, 9999));
         $company->email = $data['email'];
         $company->phone = $data['phone'];
         $company->fax = $data['fax'];

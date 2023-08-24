@@ -33,10 +33,6 @@
               <label for="job-title">Prénom</label>
               <input type="text" name="f_name" class="form-control" value="{{ Auth::user()->diplome->f_name }}" id="job-title" placeholder="Votre prénom">
             </div>
-            <div class="form-group">
-              <label for="job-title">E-mail</label>
-              <input type="email" name="email" class="form-control" value="{{ Auth::user()->email }}" id="job-title" placeholder="Adresse email">
-            </div>
 
             <div class="form-group">
               <label for="job-location">Téléphone</label>

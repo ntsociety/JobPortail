@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OffrePostuleEmail extends Mailable
+class OffrePostuleEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -52,10 +52,7 @@ class OffrePostuleEmail extends Mailable
     public function attachments(): array
     {
         return [
-            $this->file_path => [
-                'as' => 'document.pdf',
-                'mime' => 'application/pdf',
-            ],
+            $this->file_path,
         ];
     }
 }

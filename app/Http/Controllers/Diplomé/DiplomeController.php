@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Diplomé;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmailRequest;
+use App\Http\Requests\PassewordRequest;
 use App\Models\Apply;
 use App\Models\Employe_profile;
 use App\Models\User;
 use App\Models\UserApply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class DiplomeController extends Controller
@@ -93,6 +96,40 @@ class DiplomeController extends Controller
         {
             return redirect('/')->with('status', "slug n'existe pas");
         }
+    }
+    public function account()
+    {
+        return view('diplome.compte_sec');
+    }
+    public function update_account_email(EmailRequest $request)
+    {
+        $user = User::find(Auth::id());
+        $user_profil = Employe_profile::find(Auth::id());
+        $data = $request->validated();
+        $user->email = $data['email'];
+        $user_profil->email = $data['email'];
+        // if($_REQUEST['email'])
+        // {
+        //     $user->email = $_REQUEST['email'];
+        // }
+        $user->update();
+        $user_profil->update();
+        return redirect()->back()->with('message', 'E-mail modifier avec succès');
+    }
+    public function update_account_pass(PassewordRequest $request)
+    {
+        $data = $request->validated();
+        $currentPasswordStatus = Hash::check($data['current_password'], Auth::user()->password);
+        if($currentPasswordStatus)
+        {
+             $user = User::findOrFail(Auth::user()->id);
+             $user->password = Hash::make($data['password']);
+             $user->update();
+             return redirect()->back()->with('message', 'Mot de passe modifié avec succès !');
+        }
+        else{
+         return redirect()->back()->with('error', 'Mot de passe actuel ne correspond pas');
+         }
     }
 
 }

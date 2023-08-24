@@ -21,7 +21,7 @@
         <div class="container">
             <div class="col-md-12 col-sm-12 mt-5 me-auto ms-auto">
                 <div class="card">
-                    {{-- <div class="card-header">
+                    <div class="card-header">
                         <h3>Hello <i><b>{{ $apply->company->name }} !</b></i></h3>
                         <h4>Je m'appelle <span class="text-uppercase">{{ $apply->diplomer->name }}</span> <span class="text-capitalize">{{ $apply->diplomer->f_name }}</span></h4>
                         <p>J'ai {{ $apply->diplomer->experience_years }} ans</p>
@@ -32,7 +32,7 @@
                         <hr>
                         <h5><a href="{{ route('diplome-profil_public',$apply->diplomer->slug) }}" target="_blank">Mon Profile</a></h5>
                         <h3>Cv ci-joint</h3>
-                    </div> --}}
+                    </div>
                     <div class="card-footer text-center bg-light">
                         <h2>Togo Job Portail</h2>
                         <p>Lomé Togo</p>

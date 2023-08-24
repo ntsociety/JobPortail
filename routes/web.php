@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminControlleur;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EmploisController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Diplomé\DiplomeController;
 use App\Http\Controllers\Employeur\CompanyController;
 use App\Http\Controllers\Employeur\OffreControlleur;
@@ -126,6 +127,10 @@ Route::middleware(['auth'])->group(function(){
         Route::get('offres-postulés', [DiplomeController::class, 'applied'])->name('diplome-applied');
         Route::get('{slug}/profile-public/', [DiplomeController::class, 'public_profile'])->name('diplome-profil_public');
 
+        Route::get('edit-account', [DiplomeController::class, 'account'])->name('employe-account');
+        Route::put('update-account_pass', [DiplomeController::class, 'update_account_pass'])->name('employe-update_account_pass');
+        Route::put('update-account_email', [DiplomeController::class, 'update_account_email'])->name('employe-update_account_email');
+
     });
 });
 
@@ -135,3 +140,12 @@ Route::middleware(['auth'])->group(function(){
     Route::get('{slug}/profile-public', [CompanyController::class, 'prof_public'])->name('company_public_profile');
 
 });
+
+
+// google login
+Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login_google');
+Route::get('google/callback', [LoginController::class, 'handleGoogleCallback']);
+
+// facebook login
+Route::get('login/facebook', [LoginController::class, 'redirectToFacebook'])->name('login_facebook');
+Route::get('facebook/callback', [LoginController::class, 'handleFacebookCallback']);

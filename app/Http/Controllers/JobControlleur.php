@@ -127,16 +127,16 @@ class JobControlleur extends Controller
 
 
         try{
-            // Mail::to("$company_email")->send(new OffrePostuleEmail($apply, $file_path));
-            Mail::send('email.postule_email', $data, function($message)use($company_email, $file_path) {
-                $message->to($company_email)
-                        ->subject('Nouveau Candidat');
+            Mail::to("$company_email")->send(new OffrePostuleEmail($apply, $file_path));
+            // Mail::send('email.postule_email', $data, function($message)use($company_email, $file_path) {
+            //     $message->to($company_email)
+            //             ->subject('Nouveau Candidat');
 
-                    $message->attach($file_path);
-                // foreach ($files as $file){
-                //     $message->attach($file);
-                // }
-            });
+            //         $message->attach($file_path);
+            //     // foreach ($files as $file){
+            //     //     $message->attach($file);
+            //     // }
+            // });
             return redirect()->back()->with('message', 'Job postulé avec succès!');
         }catch(\Exception $e){
             return redirect()->back()->with('error', "Quelques choses s'est mal passé! $e");

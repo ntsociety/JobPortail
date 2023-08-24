@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Company_profile;
 use App\Models\Employe_profile;
+use App\Notifications\NewUserNotify;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -79,7 +83,12 @@ class RegisterController extends Controller
         $employe = new Employe_profile();
         $employe->user_id = $user->id;
         $employe->name = $user->name;
+        $employe->email = $user->email;
+        $employe->slug = Str::slug($user->name) . strval(rand(1111, 9999));
         $employe->save();
+
+        event(new Registered($user));
+        $user->notify(new NewUserNotify($user));
         return $user;
     }
 }
