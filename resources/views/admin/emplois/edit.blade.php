@@ -141,7 +141,7 @@
 
             <div class="form-group mb-3">
                 <label for="job-location">Date limite de dépôt</label>
-                <input name="apps_deadline" value="{{ $job->apps_deadline }}" type="text" class="form-control @error('apps_deadline') is-invalid @enderror" id="" placeholder="e.g. 20-12-2022">
+                <input name="apps_deadline" value="{{ $job->apps_deadline }}" type="date" class="form-control @error('apps_deadline') is-invalid @enderror" id="" placeholder="e.g. 20-12-2022">
                 @error('apps_deadline')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

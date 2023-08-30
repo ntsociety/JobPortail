@@ -35,9 +35,10 @@ class NewUserNotify extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('Salut ' . $this->user->name. ' ! nous vous remercions pour votre confiance en nous. Le moyen le plus simple d\'obtenir l\'emploi de vos rêves !')
-                    ->action('Cliquer ici', url('/'))
-                    ->line('Merci de nous avoir choisi!');
+                ->subject('Bienvenue sur notre site!')
+                ->line('Salut ' . $this->user->name. ' ! Merci de votre inscription sur notre site. Le moyen le plus simple d\'obtenir l\'emploi de vos rêves !')
+                ->action('Visitez le site', url('/'))
+                ->line('Nous sommes ravis de vous compter à bord !');
     }
 
     /**

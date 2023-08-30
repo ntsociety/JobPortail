@@ -27,13 +27,13 @@ return new class extends Migration
             $table->string('experience_years')->nullable();
             $table->text('education')->nullable();
             $table->text('experience')->nullable();
-            $table->string('salary')->nullable();
-            $table->string('lang_court')->nullable();
-            $table->string('sec_lang')->nullable();
+            $table->string('lang_1')->nullable();
+            $table->string('lang_2')->nullable();
             $table->string('cv')->nullable();
-            $table->string('certificat')->nullable();
-            $table->string('diplom')->nullable();
             $table->string('photo_profil')->nullable();
+            $table->string('fb_user')->nullable();
+            $table->string('insta_user')->nullable();
+            $table->string('link_user')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

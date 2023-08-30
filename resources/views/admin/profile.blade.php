@@ -1,4 +1,4 @@
-@extends('layouts.company')
+@extends('layouts.admin')
 @section('content')
  <!-- HOME -->
 
@@ -28,7 +28,10 @@
                     <hr>
                     <div class="row company-row">
                         <div class="col-md-6 my-0">
-                            <p><small><b>Agrement : </b>{{ Auth::user()->company->agrement }}</small></p>
+                            <p><small><b>Agrement : </b>{{ Auth::user()->company->register_num }}</small></p>
+                        </div>
+                        <div class="col-md-6 my-0">
+                            <p><small><b>N° NIF : </b>{{ Auth::user()->company->nif_num }}</small></p>
                         </div>
                         <div class="col-md-6 my-0">
                             <p class="fonts"><b class="text-bold">Email : </b>{{ Auth::user()->company->company_email }}</p>

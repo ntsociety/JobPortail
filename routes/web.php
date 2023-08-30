@@ -44,10 +44,24 @@ Route::middleware(['auth', 'isAdmin'])->group(function(){
         Route::get('profile-diplômé/{slug}', [AdminControlleur::class, 'diplôme_profile'])->name('diplôme_profile');
         // company
         Route::get('entreprises', [AdminControlleur::class, 'company'])->name('company');
+        // role
+        Route::get('entreprise/{slug}', [AdminControlleur::class, 'company_role'])->name('company_role');
+        Route::post('entreprise/{id}/store', [AdminControlleur::class, 'company_role_store'])->name('company_role_store');
+
         Route::get('entreprise/{slug}/profile', [AdminControlleur::class, 'company_prof'])->name('company_prof');
         // all job
         Route::get('offres-des-emplois', [AdminControlleur::class, 'jobs'])->name('jobs');
         Route::get('offre-d-emploi/{slug}', [AdminControlleur::class, 'single_job'])->name('view_job');
+
+        // profil
+        Route::get('profile', [AdminControlleur::class, 'profile'])->name('admin-profile');
+        // compte et sécurité
+        Route::get('edit-account', [AdminControlleur::class, 'account'])->name('admin-account');
+        Route::put('update-account_pass', [AdminControlleur::class, 'update_account_pass'])->name('admin-update_account_pass');
+        Route::put('update-account_email', [AdminControlleur::class, 'update_account_email'])->name('admin-update_account_email');
+
+        // users
+        Route::get('users', [AdminControlleur::class, 'users'])->name('users');
 
 
     });
@@ -97,6 +111,11 @@ Route::middleware(['auth', 'isCompany'])->group(function(){
         Route::get('profile', [CompanyController::class, 'profile'])->name('company-profile');
         Route::get('mettre-à-jour-profile', [CompanyController::class, 'update_profil'])->name('company-update_profil');
 
+        // compte et sécurité
+        Route::get('edit-account', [CompanyController::class, 'account'])->name('company-account');
+        Route::put('update-account_pass', [CompanyController::class, 'update_account_pass'])->name('company-update_account_pass');
+        Route::put('update-account_email', [CompanyController::class, 'update_account_email'])->name('company-update_account_email');
+
         // company offres
         Route::get('mes-offres', [CompanyController::class, 'offres'])->name('company-offres');
 
@@ -126,7 +145,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('profile-update', [DiplomeController::class, 'update'])->name('update-diplome-profile');
         Route::get('offres-postulés', [DiplomeController::class, 'applied'])->name('diplome-applied');
         Route::get('{slug}/profile-public/', [DiplomeController::class, 'public_profile'])->name('diplome-profil_public');
-
+        // compte et sécurité
         Route::get('edit-account', [DiplomeController::class, 'account'])->name('employe-account');
         Route::put('update-account_pass', [DiplomeController::class, 'update_account_pass'])->name('employe-update_account_pass');
         Route::put('update-account_email', [DiplomeController::class, 'update_account_email'])->name('employe-update_account_email');

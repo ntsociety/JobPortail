@@ -35,22 +35,28 @@
                     </span>
                 @enderror
               </div>
-              <div class="col-md-6 form-group">
-                  <label for="job-title">Domain d'activité</label>
-                  <input type="text" name="domain" value="{{ old('domain') }}" class="form-control @error('domain') is-invalid @enderror" id="job-title" placeholder="Domain d'activité">
-                  @error('domain')
+              <div class="col-md-6 form-group mb-3">
+                <label for="job-region">Domain d'activité</label>
+                <select name="domain" value="{{ old('domain') }}" class="form-select border rounded @error('domain') is-invalid @enderror" id="job-region" data-style="btn-black" data-width="100%" data-live-search="true" title="Domain d'activité">
+                    <option value="1" selected>Sélectionner la catégorie</option>
+                    @foreach ($category as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+                @error('domain')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                </div>
+            </div>
               <div class="col-md-6 form-group">
                 <label for="job-title">Email d'entreprise</label>
-                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" id="job-title" placeholder="Email d'entreprise">
-                @error('email')
+                <input type="email" name="company_email" class="form-control @error('company_email') is-invalid @enderror" value="{{ old('company_email') }}" id="job-title" placeholder="Email d'entreprise">
+                @error('company_email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
+                    
                 @enderror
               </div>
 
@@ -74,8 +80,8 @@
                 </div>
               <div class="col-md-6 form-group">
                 <label for="job-location">Agrement</label>
-                <input name="register_num" type="text" class="form-control @error('register_num') is-invalid @enderror" value="{{ old('register_num') }}" id="job-location" placeholder="Agrement">
-                @error('register_num')
+                <input name="agrement" type="text" class="form-control @error('agrement') is-invalid @enderror" value="{{ old('agrement') }}" id="job-location" placeholder="Agrement">
+                @error('agrement')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -106,6 +112,7 @@
                 @enderror
               </div>
             </div>
+            
 
 
             <div class="form-group">

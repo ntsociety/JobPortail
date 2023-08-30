@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}" />
     <!-- bootstrap -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap.min.css') }}">
+
     <!-- Boxicons CDN Link -->
 
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />

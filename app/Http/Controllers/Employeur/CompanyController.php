@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\Employeur;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BecomeEmployerRequest;
+use App\Http\Requests\EmailRequest;
+use App\Http\Requests\PassewordRequest;
 use App\Mail\SendEmailContact;
 use App\Models\Apply;
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Company_profile;
 use App\Models\Contact;
 use App\Models\Employe_profile;
 use App\Models\Job;
+use App\Models\User;
 use App\Models\UserApply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -24,12 +30,18 @@ class CompanyController extends Controller
     }
     public function become()
     {
-       return view('company.become');
+        $category = Category::where('id', '!=', 1)->get();
+       return view('company.become', compact('category'));
     }
-    public function store(Request $request)
+    public function store(BecomeEmployerRequest $request)
     {
+        // 'identifier' => 'required|regex:/^[a-zA-Z0-9]+$/',
+        // 'text_only' => 'required|regex:/^[a-zA-Z]+$/'
+        // 'field_name' => 'required|regex:/^[^\/|\\\]+$/',
+
+
         $company = Company_profile::find(Auth::id());
-        $data = $request->all();
+        $data = $request->validated();
         if ($request->hasFile('logo'))
         {
             if($company->logo)
@@ -46,16 +58,32 @@ class CompanyController extends Controller
             $company->logo = $imageName;
         }
         $company->name = $data['name'];
+        $company->domain = $data['domain'];
         $company->slug = Str::slug($data['name']). strval(rand(1111, 9999));
-        $company->email = $data['email'];
+        $company->company_email = $data['company_email'];
         $company->phone = $data['phone'];
         $company->fax = $data['fax'];
         $company->address = $data['address'];
-        $company->register_num = $data['register_num'];
+        $company->agrement = $data['agrement'];
         $company->about = $data['about'];
-        $company->fb_url = $data['facebook'];
-        $company->link_url = $data['linkedin'];
-        $company->twit_url = $data['twitter'];
+        $company->statut = $data['en attente'];
+        if($request->input('facebook'))
+        {
+            $company->fb_user = $data['facebook'];
+        }
+        if($request->input('site_url'))
+        {
+            $company->site_url = $data['site_url'];
+        }
+        if($request->input('twitter'))
+        {
+            $company->twit_user = $data['twitter'];
+        }
+        if($request->input('linkedin'))
+        {
+            $company->link_user = $data['linkedin'];
+        }
+        
         $company->update();
 
         Company::create([
@@ -134,6 +162,43 @@ class CompanyController extends Controller
             return redirect('/')->with('status', "slug n'existe pas");
         }
 
+    }
+    // account & sec
+    public function account()
+    {
+        return view('company.securité');
+    }
+    public function update_account_email(EmailRequest $request)
+    {
+        $user = User::find(Auth::id());
+        $data = $request->validated();
+        $user->email = $data['email'];
+        $user->update();
+        return redirect()->back()->with('message', 'E-mail modifier avec succès');
+    }
+    public function update_account_pass(PassewordRequest $request)
+    {
+        $data = $request->validated();
+        if($request->input('current_password'))
+        {
+            $currentPasswordStatus = Hash::check($data['current_password'], Auth::user()->password);
+            if($currentPasswordStatus)
+            {
+                $user = User::findOrFail(Auth::user()->id);
+                $user->password = Hash::make($data['password']);
+                $user->update();
+                return redirect()->back()->with('message', 'Mot de passe modifié avec succès !');
+            }
+            else{
+            return redirect()->back()->with('error', 'Mot de passe actuel ne correspond pas');
+            }
+        }
+        else{
+            $user = User::findOrFail(Auth::user()->id);
+            $user->password = Hash::make($data['password']);
+            $user->update();
+            return redirect()->back()->with('message', 'Mot de passe modifié avec succès !');
+        }
     }
 
 }

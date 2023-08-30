@@ -39,7 +39,16 @@ class EmploisController extends Controller
         // dd($data);
         $job = new Job();
         $job->user_id = Auth::id();
-
+        if ($request->hasFile('cover'))
+        {
+            // dd($data['cover']);
+            $file = $data['cover'];
+            // $ext = $file->getClientOriginalExtension();
+            $imageName=date('d-m-Y').'_'.$file->getClientOriginalName();
+            // $filename = time().'.'.$ext;
+            $file->move('assets/job/couverture/',$imageName);
+            $job->cover = $imageName;
+        }
 
         $job->title = $data['title'];
         $job->slug = Str::slug($data['title']);

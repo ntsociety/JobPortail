@@ -3,16 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class PassewordRequest extends FormRequest
+class DiplomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,13 +21,8 @@ class PassewordRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rulers = [
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-       ];
-       if(Auth::user()->password != null)
-       {
-            $rulers += ['current_password' => ['required', 'string', 'min:8'],];
-       }
-       return $rulers;
+        return [
+            
+        ];
     }
 }

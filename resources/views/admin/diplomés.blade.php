@@ -27,6 +27,7 @@
           </tr>
         </thead>
         <tbody class="bg-light">
+            @if ($diplome->count() >0)
             @foreach ($diplome as $item)
             <tr class="align-middle">
                 <td>
@@ -42,6 +43,11 @@
                 <td>cv</td>
             </tr>
             @endforeach
+            @else
+              <tr>
+                <td colspan="5" class="text-center">Pas encore de diplômé</td>
+              </tr>
+            @endif
         </tbody>
       </table>
     </div>

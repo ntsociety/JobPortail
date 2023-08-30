@@ -97,8 +97,6 @@
                         {{-- company route --}}
                         @if(Auth::user()->role == "recruteur")
                             <a class="dropdown-item" href="{{ route('company-profile') }}">{{ __('Profile') }} </a>
-                            <a class="dropdown-item" href="{{ route('company-offres') }}">{{ __('Mes Offres') }} </a>
-                            <a class="dropdown-item" href="{{ route('company_public_profile',Auth::user()->company->name) }}">{{ __('Profile public') }} </a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();

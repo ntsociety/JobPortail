@@ -35,32 +35,21 @@ class OffreControlleur extends Controller
      */
     public function store(OffreRequest $request)
     {
-        /*
-
-        g('slug');
-        g('title');
-        g('campany')->nullable
-        g('region')->nullable(
-        g('type')->nullable();
-        g('vacancy')->nullable
-        g('experience')->nulla
-        g('salary')->nullable(
-        g('gender')->nullable(
-        g('apps_deadline')->nu
-        'description')->nullab
-        'responsibilities')->n
-        'education_experience'
-        'other_benifits')->nul
-        g('cover')->nullable()
-        an('is_available')->de
-        an('is_verify')->defau
-
-        */
+        
         $data = $request->validated();
         // dd($data);
         $job = new Job();
         $job->user_id = Auth::id();
-
+        if ($request->hasFile('cover'))
+        {
+            // dd($data['cover']);
+            $file = $data['cover'];
+            // $ext = $file->getClientOriginalExtension();
+            $imageName=date('d-m-Y').'_'.$file->getClientOriginalName();
+            // $filename = time().'.'.$ext;
+            $file->move('assets/job/couverture/',$imageName);
+            $job->cover = $imageName;
+        }
 
         $job->title = $data['title'];
         // $job->title = $data['campany'];

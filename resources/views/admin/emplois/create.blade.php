@@ -140,7 +140,7 @@
 
             <div class="form-group mb-3">
                 <label for="job-location">Date limite de dépôt</label>
-                <input name="apps_deadline" value="{{ old('apps_deadline') }}" type="text" class="form-control @error('apps_deadline') is-invalid @enderror" id="" placeholder="e.g. 20-12-2022">
+                <input name="apps_deadline" value="{{ old('apps_deadline') }}" type="date" class="form-control @error('apps_deadline') is-invalid @enderror" id="" placeholder="e.g. 20-12-2022">
                 @error('apps_deadline')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -195,6 +195,15 @@
                     @enderror
                 </div>
             </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Couverture </label>
+                <input type="file" class="form-control @error('cover') is-invalid @enderror" id="" placeholder="image" name="cover">
+                  @error('cover')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror
+              </div>
             <!--company details-->
 
             <button type="submit" name="submit" class="btn btn-block btn-primary btn-md" value="Save Job">Ajouter</button>

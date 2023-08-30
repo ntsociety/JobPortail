@@ -24,12 +24,12 @@ return new class extends Migration
             $table->string('salary')->nullable();
             $table->string('gender')->nullable();
             $table->string('apps_deadline')->nullable();
+            $table->string('cover')->nullable();
             $table->text('description')->nullable();
             $table->text('responsibilities')->nullable();
             $table->text('education_experience')->nullable();
             $table->text('other_benifits')->nullable();
             $table->boolean('is_available')->default('1');
-            $table->boolean('is_verify')->default('0');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('cate_id')->references('id')->on('categories')->onDelete('cascade');

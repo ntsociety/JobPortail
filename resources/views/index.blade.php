@@ -18,30 +18,30 @@
 
             <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
             <div class="d-flex align-items-center justify-content-center mb-2">
-                <strong class="number" data-number="1930">0</strong>
+                <strong class="number" data-number="{{ $diplome->count() }}">0</strong>
             </div>
             <span class="caption">Candidates</span>
             </div>
 
             <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
             <div class="d-flex align-items-center justify-content-center mb-2">
-                <strong class="number" data-number="54">0</strong>
+                <strong class="number" data-number="{{ $job->count() }}">0</strong>
             </div>
-            <span class="caption">Jobs Posted</span>
+            <span class="caption">Jobs Postés</span>
             </div>
 
             <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
             <div class="d-flex align-items-center justify-content-center mb-2">
-                <strong class="number" data-number="120">0</strong>
+                <strong class="number" data-number="5">0</strong>
             </div>
             <span class="caption">Jobs Filled</span>
             </div>
 
             <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
             <div class="d-flex align-items-center justify-content-center mb-2">
-                <strong class="number" data-number="550">0</strong>
+                <strong class="number" data-number="{{ $company->count() }}">0</strong>
             </div>
-            <span class="caption">Companies</span>
+            <span class="caption">Entreprises</span>
             </div>
 
 

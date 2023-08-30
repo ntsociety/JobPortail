@@ -24,6 +24,12 @@
         </a>
       </li>
       <li>
+        <a href="{{ route('users') }}">
+          <i class="bx bx-user"></i>
+          <span class="links_name">Utilistateurs</span>
+        </a>
+      </li>
+      <li>
         <a href="{{ route('diplomer') }}">
           <i class="bx bx-user"></i>
           <span class="links_name">Diplômés</span>

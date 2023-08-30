@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Diplomé;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DiplomerRequest;
 use App\Http\Requests\EmailRequest;
 use App\Http\Requests\PassewordRequest;
 use App\Models\Apply;
@@ -24,10 +25,24 @@ class DiplomeController extends Controller
     {
         return view('diplome.edit');
     }
-    public function update(Request $request)
+    public function update(DiplomerRequest $request)
     {
         $employ = Employe_profile::find(Auth::id());
-        $data = $request->all();
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'f_name' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'numeric', 'digits:8'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:employe_profiles'],
+            'address'=>['nullable', 'string', 'max:255'],
+            'bio'=>['nullable', 'string'],
+            'domain'=>['nullable', 'string', 'max:255'],
+            'experience_years'=>['nullable', 'string', 'max:255'],
+            'fb_user'=>['nullable', 'string', 'max:255'],
+            'twit_user'=>['nullable', 'string', 'max:255'],
+            'link_user'=>['nullable', 'string', 'max:255'],
+            "photo_profil" => ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg', 'max:2048'],
+            "cv" => ['nullable', 'file', 'mimes:pdf', 'max:5000'],
+        ]);
         if ($request->hasFile('photo_profil'))
         {
             // supprimé l'ancienne photo profile
@@ -76,6 +91,9 @@ class DiplomeController extends Controller
         $employ->bio = $data['bio'];
         $employ->domain = $data['domain'];
         $employ->experience_years = $data['experience_years'];
+        $employ->fb_user = $data['facebook'];
+        $employ->twit_user = $data['twitter'];
+        $employ->link_user = $data['linkedin'];
         $employ->update();
         return redirect()->route('diplome-profile')->with('message', 'Merci pour votre confiance en nous !');
     }
@@ -108,10 +126,6 @@ class DiplomeController extends Controller
         $data = $request->validated();
         $user->email = $data['email'];
         $user_profil->email = $data['email'];
-        // if($_REQUEST['email'])
-        // {
-        //     $user->email = $_REQUEST['email'];
-        // }
         $user->update();
         $user_profil->update();
         return redirect()->back()->with('message', 'E-mail modifier avec succès');
@@ -119,17 +133,26 @@ class DiplomeController extends Controller
     public function update_account_pass(PassewordRequest $request)
     {
         $data = $request->validated();
-        $currentPasswordStatus = Hash::check($data['current_password'], Auth::user()->password);
-        if($currentPasswordStatus)
+        if($request->input('current_password'))
         {
-             $user = User::findOrFail(Auth::user()->id);
-             $user->password = Hash::make($data['password']);
-             $user->update();
-             return redirect()->back()->with('message', 'Mot de passe modifié avec succès !');
+            $currentPasswordStatus = Hash::check($data['current_password'], Auth::user()->password);
+            if($currentPasswordStatus)
+            {
+                $user = User::findOrFail(Auth::user()->id);
+                $user->password = Hash::make($data['password']);
+                $user->update();
+                return redirect()->back()->with('message', 'Mot de passe modifié avec succès !');
+            }
+            else{
+            return redirect()->back()->with('error', 'Mot de passe actuel ne correspond pas');
+            }
         }
         else{
-         return redirect()->back()->with('error', 'Mot de passe actuel ne correspond pas');
-         }
+            $user = User::findOrFail(Auth::user()->id);
+            $user->password = Hash::make($data['password']);
+            $user->update();
+            return redirect()->back()->with('message', 'Mot de passe modifié avec succès !');
+        }
     }
 
 }

@@ -29,13 +29,10 @@
                         <hr>
                         <div class="row company-row">
                             <div class="col-md-6 my-0">
-                                <p><small><b>N° Enregistrement : </b>{{ $profil->register_num }}</small></p>
+                                <p><small><b>Agrement : </b>{{ $profil->agrement }}</small></p>
                             </div>
                             <div class="col-md-6 my-0">
-                                <p><small><b>N° NIF : </b>{{ $profil->nif_num }}</small></p>
-                            </div>
-                            <div class="col-md-6 my-0">
-                                <p class="fonts"><b class="text-bold">Email : </b>{{ $profil->email }}</p>
+                                <p class="fonts"><b class="text-bold">Email : </b>{{ $profil->company_email }}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="fonts"><b>Téléphone : </b>{{ $profil->phone }}</p>

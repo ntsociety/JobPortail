@@ -97,8 +97,7 @@ class LoginController extends Controller
             $user->provider_id = $data->id;
             // $user->avatar = $data->avatar;
             $user->save();
-            event(new Registered($user));
-            $user->notify(new NewUserNotify($user));
+            
             // formateur
             $company_profile = new Company_profile();
             $company_profile->user_id = $user->id;
@@ -110,6 +109,9 @@ class LoginController extends Controller
             $employe_profile->email = $user->email;
             $employe_profile->slug = Str::slug($user->name) . strval(rand(1111, 9999));
             $employe_profile->save();
+            
+            event(new Registered($user));
+            $user->notify(new NewUserNotify($user));
         }
         Auth::login($user);
     }

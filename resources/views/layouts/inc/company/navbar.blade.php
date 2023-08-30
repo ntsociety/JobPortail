@@ -9,8 +9,9 @@
           <i class="bx bx-user"></i>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark bg-main" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item fw-bold text-light" href="#">Profile</a></li>
-          <li><a class="dropdown-item fw-bold text-light" href="#">Compte et sécurité</a></li>
+          <li><a class="dropdown-item fw-bold text-light" href="{{ route('company-profile') }}">Profile</a></li>
+          <li><a class="dropdown-item fw-bold text-light" href="{{ route('company-account') }}">Compte et sécurité</a></li>
+          <li><a class="dropdown-item" href="{{ route('company_public_profile',Auth::user()->company->name) }}">{{ __('Profile public') }} </a></li>
           <li><hr class="dropdown-divider"></li>
           <li>
             <a class="dropdown-item fw-bold text-light" href="{{ route('logout') }}"
