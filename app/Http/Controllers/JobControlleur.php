@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\OffrePostuleEmail;
 use App\Models\Apply;
 use App\Models\Category;
+use App\Models\Company_profile;
 use App\Models\Employe_profile;
 use App\Models\Job;
 use App\Models\SaveJob;
@@ -37,6 +38,11 @@ class JobControlleur extends Controller
             return redirect('/')->with('status', "slug n'existe pas");
         }
 
+    }
+    public function category()
+    {
+        $category = Category::where('id', '!=', 1)->orderBy('created_at', 'desc')->get();
+        return view('job.category', compact('category'));
     }
     public function save_job($id)
     {
@@ -158,22 +164,27 @@ class JobControlleur extends Controller
     }
     public function search()
     {
-        $search_text = $_GET['search'];
-        $region = $_GET['region'];
-        $type = $_GET['type'];
-        $job = Job::where('title', 'LIKE', '%'.$search_text.'%')
-        ->orWhere('company', 'LIKE', '%'.$search_text.'%')
-        ->orWhere('region', 'LIKE', '%'.$region.'%')
-        ->orWhere('type', 'LIKE', '%'.$type.'%')->orderBy('created_at', 'desc')->get();
-
-        // search trend
-        $keyword = new Search();
-        $keyword->keyword = $search_text . '_'. $region;
-        if($job->count() == 0)
+        if(!empty($_GET['search']))
         {
-            $keyword->result = 0;
+            $search_text = $_GET['search'];
+            $region = $_GET['region'];
+            $type = $_GET['type'];
+            $company = Company_profile::where('is_verify', 1)->get();
+            $job = Job::where('title', 'LIKE', '%'.$search_text.'%')
+            ->orWhere('region', 'LIKE', '%'.$region.'%')
+            ->orWhere('type', 'LIKE', '%'.$type.'%')->orderBy('created_at', 'desc')->get();
+
+            // search trend
+            $keyword = new Search();
+            $keyword->keyword = $search_text . '_'. $region;
+            if($job->count() == 0)
+            {
+                $keyword->result = 0;
+            }
+            $keyword->save();
+            return view('job.search', compact('job', 'search_text'));
+        }else{
+            return redirect()->back();
         }
-        $keyword->save();
-        return view('job.search', compact('job', 'search_text'));
     }
 }

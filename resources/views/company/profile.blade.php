@@ -56,9 +56,18 @@
                     <hr>
 
                     <div class="px-3">
-                        <a href="https://www.facebook.com/{{ Auth::user()->company->fb_url }}" class="pt-3 pb-3 pr-3 pl-0 underline-none"><span class="icon-facebook"></span></a>
-                        <a href="https://www.facebook.com/{{ Auth::user()->company->twit_url }}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
-                        <a href="https://www.facebook.com/{{ Auth::user()->company->link_url }}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
+                        @if (Auth::user()->company->fb_user)
+                        <a href="https://www.facebook.com/{{Auth::user()->company->fb_user}}" class="pt-3 pb-3 pr-3 pl-0 underline-none"><span class="icon-facebook"></span></a>
+                        @endif
+                        @if (Auth::user()->company->insta_user)  
+                        <a href="https://www.instagram.com/{{Auth::user()->company->insta_user}}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
+                        @endif
+                        @if (Auth::user()->company->link_user)
+                        <a href="https://www.linkedin.com/in/{{Auth::user()->company->link_user}}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
+                        @endif
+                        @if (Auth::user()->company->site_url)
+                        <a href="https://{{Auth::user()->company->site_url}}" class="pt-3 pb-3 pr-3 pl-0"><i class='bx bx-link' ></i></a>
+                        @endif
                     </div>
 
 

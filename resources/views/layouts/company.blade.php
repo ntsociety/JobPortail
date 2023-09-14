@@ -38,6 +38,8 @@
 
     <script src="{{ asset('admin/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/main.js') }}"></script>
+    <script src="{{ asset('admin/assets/ckeditor/ckeditor.js') }}"></script> <!-- Ckeditor -->
+    <script src="{{ asset('admin/assets/js/ckeditor.js') }}"></script> <!-- Ckeditor -->
     @yield('script')
   </body>
 </html>

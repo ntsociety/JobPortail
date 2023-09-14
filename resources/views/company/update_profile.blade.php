@@ -13,9 +13,10 @@
         </div>
       <div class="row my-5 justify-content-center">
         <div class="col-lg-8">
-          <form class="p-4 p-md-5 border rounded" action="{{ route('become-company-store') }}" method="post" enctype="multipart/form-data">
+          <form class="p-4 p-md-5 border rounded" action="{{ route('company-update_profile') }}" method="post" enctype="multipart/form-data">
 
             <!--job details-->
+            @method('PUT')
             @csrf
 
            <div class="row mb-3">
@@ -123,7 +124,7 @@
                     <label for="job-title">Facebook</label>
                     <div class="input-group">
                         <span class="input-group-text">https://</span>
-                        <input type="text" name="facebook" value="{{ Auth::user()->company->fb_url }}" class="form-control @error('facebook') is-invalid @enderror" id="job-title" placeholder="Non utilisateur">
+                        <input type="text" name="facebook" value="{{ Auth::user()->company->fb_user }}" class="form-control @error('facebook') is-invalid @enderror" id="job-title" placeholder="Non utilisateur">
                     </div>
                     @error('facebook')
                         <span class="invalid-feedback" role="alert">
@@ -144,12 +145,12 @@
                     @enderror
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="job-title">Twitter</label>
+                    <label for="job-title">Instagram</label>
                     <div class="input-group">
                         <span class="input-group-text">https://</span>
-                        <input type="text" name="twitter" value="{{ Auth::user()->company->twit_url }}" class="form-control @error('twitter') is-invalid @enderror" id="job-title" placeholder="Non utilisateur">
+                        <input type="text" name="instagram" value="{{ Auth::user()->company->insta_user }}" class="form-control @error('instagram') is-invalid @enderror" id="job-title" placeholder="Non utilisateur">
                     </div>
-                    @error('twitter')
+                    @error('instagram')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

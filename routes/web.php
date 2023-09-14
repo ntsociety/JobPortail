@@ -77,6 +77,7 @@ Route::get('/offres-emploies', [JobControlleur::class, 'job_liste'])->name('job_
 Route::get('/offres-emploie/{slug}', [JobControlleur::class, 'single_job'])->name('single_job');
 Route::get('offres/search', [JobControlleur::class, 'search'])->name('search');
 Route::get('catégorie/{slug}', [JobControlleur::class, 'viewcategory'])->name('viewcategory');
+Route::get('catégories', [JobControlleur::class, 'category'])->name('category');
 
 
 // job
@@ -95,6 +96,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/apply_job/{id}', [JobControlleur::class, 'apply_job'])->name('apply_job');
     // pdf view
     Route::get('pdf_view', [App\Http\Controllers\Controller::class, 'pdfView'])->name('pdf_view');
+    Route::get('candidats', [App\Http\Controllers\Controller::class, 'candidats'])->name('candidats');
 
 
 });
@@ -111,6 +113,8 @@ Route::middleware(['auth', 'isCompany'])->group(function(){
         Route::get('profile', [CompanyController::class, 'profile'])->name('company-profile');
         Route::get('mettre-à-jour-profile', [CompanyController::class, 'update_profil'])->name('company-update_profil');
 
+        Route::put('update-profile', [CompanyController::class, 'update_profile'])->name('company-update_profile');
+
         // compte et sécurité
         Route::get('edit-account', [CompanyController::class, 'account'])->name('company-account');
         Route::put('update-account_pass', [CompanyController::class, 'update_account_pass'])->name('company-update_account_pass');
@@ -124,7 +128,7 @@ Route::middleware(['auth', 'isCompany'])->group(function(){
         Route::get('diplomés/{slug}/profile', [CompanyController::class, 'diplome_profile'])->name('camp_diplôme_profile');
         Route::get('company-diplomés/', [CompanyController::class, 'company_diplomer'])->name('company_diplomer');
         Route::get('send-mail-to-user/{slug}', [CompanyController::class, 'send_mail_user'])->name('send_mail_user');
-        Route::post('send-mail-to-user_store', [CompanyController::class, 'send_mail_user_store'])->name('send_mail_user_store');
+
 
         // offres
         Route::resource('offres', OffreControlleur::class);
@@ -150,7 +154,10 @@ Route::middleware(['auth'])->group(function(){
         Route::put('update-account_pass', [DiplomeController::class, 'update_account_pass'])->name('employe-update_account_pass');
         Route::put('update-account_email', [DiplomeController::class, 'update_account_email'])->name('employe-update_account_email');
 
+
     });
+    // send email
+    Route::post('send-mail-to-user_store', [CompanyController::class, 'send_mail_user_store'])->name('send_mail_user_store');
 });
 
 // company profil public

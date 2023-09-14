@@ -33,6 +33,12 @@ class EmailRequest extends FormRequest
                     Rule::unique('users')->ignore($this->user)
                 ],
                 ];
+            }else{
+                $rules = [
+                    'email' => ['string', 'email', 'max:255',
+                    Rule::unique('users')->ignore($this->user)
+                ],
+                ];
             }
 
         }

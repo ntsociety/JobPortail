@@ -57,16 +57,70 @@ class CompanyController extends Controller
             $file->move('assets/company/logo/',$imageName);
             $company->logo = $imageName;
         }
+        
         $company->name = $data['name'];
         $company->domain = $data['domain'];
         $company->slug = Str::slug($data['name']). strval(rand(1111, 9999));
         $company->company_email = $data['company_email'];
         $company->phone = $data['phone'];
-        $company->fax = $data['fax'];
         $company->address = $data['address'];
         $company->agrement = $data['agrement'];
         $company->about = $data['about'];
-        $company->statut = $data['en attente'];
+
+        $company->statut = 'en attente';
+        $company->update();
+
+        Company::create([
+            'user_id' => Auth::id(),
+        ]);
+        return redirect()->route('company-profile')->with('message', 'Merci pour votre confiance en nous !');
+    }
+    public function update_profile(BecomeEmployerRequest $request)
+    {
+        // 'identifier' => 'required|regex:/^[a-zA-Z0-9]+$/',
+        // 'text_only' => 'required|regex:/^[a-zA-Z]+$/'
+        // 'field_name' => 'required|regex:/^[^\/|\\\]+$/',
+
+
+        $company = Company_profile::find(Auth::id());
+        $data = $request->validated();
+        if ($request->hasFile('logo'))
+        {
+            if($company->logo)
+            {
+                $path = 'assets/company/logo/'.$company->logo;
+                unlink($path);
+            }
+            // dd($data['cover']);
+            $file = $request->file('logo');
+            // $ext = $file->getClientOriginalExtension();
+            $imageName=date('d-m-Y').'_'.$file->getClientOriginalName();
+            // $filename = time().'.'.$ext;
+            $file->move('assets/company/logo/',$imageName);
+            $company->logo = $imageName;
+        }
+        $company->name = $data['name'];
+        $company->domain = $data['domain'];
+        $company->slug = Str::slug($data['name']). strval(rand(1111, 9999));
+        $company->phone = $data['phone'];
+        $company->address = $data['address'];
+        $company->about = $data['about'];
+        if($data['company_email'] != $company->company_email)
+        {
+            $company->company_email = $data['company_email'];
+        }
+        if($data['agrement'] != $company->agrement)
+        {
+            $company->agrement = $data['agrement'];
+        }
+        if($_SERVER['REQUEST_METHOD'] == "POST")
+        {
+            $company->statut = 'en attente';
+        }
+        if($request->input('fax'))
+        {
+            $company->fax = $data['fax'];
+        }
         if($request->input('facebook'))
         {
             $company->fb_user = $data['facebook'];
@@ -75,9 +129,9 @@ class CompanyController extends Controller
         {
             $company->site_url = $data['site_url'];
         }
-        if($request->input('twitter'))
+        if($request->input('instagram'))
         {
-            $company->twit_user = $data['twitter'];
+            $company->insta_user = $data['instagram'];
         }
         if($request->input('linkedin'))
         {
@@ -152,16 +206,8 @@ class CompanyController extends Controller
     }
     public function prof_public($slug)
     {
-        if(Company_profile::where('slug', $slug)->exists())
-        {
-            $profil = Company_profile::where('slug', $slug)->first();
-            return view('company.public_profil', compact('profil', ));
-        }
-        else
-        {
-            return redirect('/')->with('status', "slug n'existe pas");
-        }
-
+        $profil = Company_profile::where('slug', $slug)->where('statut', 'vérifié')->firstOrFail();
+        return view('company.public_profil', compact('profil'));
     }
     // account & sec
     public function account()

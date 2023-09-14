@@ -35,9 +35,15 @@
                         <hr>
 
                         <div class="px-3">
-                            <a href="#" class="pt-3 pb-3 pr-3 pl-0 underline-none"><span class="icon-facebook"></span></a>
-                            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
-                            <a href="#" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
+                            @if (Auth::user()->diplome->fb_user)
+                            <a href="https://www.facebook.com/{{Auth::user()->diplome->fb_user}}" class="pt-3 pb-3 pr-3 pl-0 underline-none"><span class="icon-facebook"></span></a>
+                            @endif
+                            @if (Auth::user()->diplome->insta_user)  
+                            <a href="https://www.instagram.com/{{Auth::user()->diplome->insta_user}}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-instagram"></span></a>
+                            @endif
+                            @if (Auth::user()->diplome->link_user)
+                            <a href="https://www.linkedin.com/in/{{Auth::user()->diplome->link_user}}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
+                            @endif
                         </div>
 
 

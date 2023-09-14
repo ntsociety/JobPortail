@@ -50,6 +50,10 @@ class EmploisController extends Controller
             $job->cover = $imageName;
         }
 
+        if(Category::where('id', $data['cate_id'])->exists())
+        {
+            $job->cate_id = $data['cate_id'];
+        }
         $job->title = $data['title'];
         $job->slug = Str::slug($data['title']);
         $job->region = $data['region'];
@@ -60,9 +64,9 @@ class EmploisController extends Controller
         $job->gender = $data['gender'];
         $job->apps_deadline = $data['apps_deadline'];
         $job->description = $data['description'];
-        $job->responsibilities = $data['responsibilities'];
-        $job->education_experience = $data['education_experience'];
-        $job->other_benifits = $data['other_benifits'];
+        // $job->responsibilities = $data['responsibilities'];
+        // $job->education_experience = $data['education_experience'];
+        // $job->other_benifits = $data['other_benifits'];
         $job->save();
         return redirect()->route('emplois.index')->with('message', 'offre ajouté avec succès!');
     }
@@ -96,10 +100,27 @@ class EmploisController extends Controller
             $data = $request->validated();
             // dd($data);
 
-
+            if ($request->hasFile('cover'))
+            {
+                if($job->cover)
+                {
+                    $path = "assets/job/couverture/".$job->cover;
+                    unlink($path);
+                }
+                // dd($data['cover']);
+                $file = $data['cover'];
+                // $ext = $file->getClientOriginalExtension();
+                $imageName=date('d-m-Y').'_'.$file->getClientOriginalName();
+                // $filename = time().'.'.$ext;
+                $file->move('assets/job/couverture/',$imageName);
+                $job->cover = $imageName;
+            }
+    
             $job->title = $data['title'];
-            $job->cate_id = $data['cate_id'];
-            // $job->title = $data['campany'];
+            if(Category::where('id', $data['cate_id'])->exists())
+            {
+                $job->cate_id = $data['cate_id'];
+            }
             $job->slug = Str::slug($data['title']);
             $job->region = $data['region'];
             $job->type = $data['type'];
@@ -109,9 +130,9 @@ class EmploisController extends Controller
             $job->gender = $data['gender'];
             $job->apps_deadline = $data['apps_deadline'];
             $job->description = $data['description'];
-            $job->responsibilities = $data['responsibilities'];
-            $job->education_experience = $data['education_experience'];
-            $job->other_benifits = $data['other_benifits'];
+            // $job->responsibilities = $data['responsibilities'];
+            // $job->education_experience = $data['education_experience'];
+            // $job->other_benifits = $data['other_benifits'];
             $job->is_available = $request->input('is_available') == True ? '1':'0';
             $job->update();
             return redirect()->route('emplois.index')->with('message', 'offre Modifié avec succès!');
@@ -124,8 +145,23 @@ class EmploisController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
-        //
+        // $job = Job::where('slug', $slug)->where('user_id', Auth::id())->firstOrFail();
+        // if($job->user_id == Auth::id())
+        // {
+
+        //     if($job->cover)
+        //     {
+        //         $path = "assets/job/couverture/".$job->cover;
+        //         unlink($path);
+        //     }
+    
+        //     $job->delete();
+        //     return redirect()->route('emplois.index')->with('message', 'offre Modifié avec succès!');
+        // }
+        // else{
+        //     return redirect()->back()->with('status', "action non autorisée");
+        // }
     }
 }

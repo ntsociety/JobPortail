@@ -33,16 +33,16 @@ class OffreRequest extends FormRequest
             'gender'=>['required', 'string', 'max:50'],
             'apps_deadline'=>['required', 'date', 'after_or_equal:now'],
             'description'=>['required', 'string'],
-            'responsibilities'=>['required', 'string'],
-            'education_experience'=>['required', 'string'],
-            'other_benifits'=>['string'],
+            // 'responsibilities'=>['required', 'string'],
+            // 'education_experience'=>['required', 'string'],
+            // 'other_benifits'=>['string'],
             "cover" => ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg', 'max:2048'],
         ];
     }
-    public function messages()
-    {
-        return[
-            'required' => 'Ce Champ est nécessaire',
-        ];
-    }
+    // public function messages()
+    // {
+    //     return[
+    //         'required' => 'Ce Champ est nécessaire',
+    //     ];
+    // }
 }

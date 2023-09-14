@@ -31,6 +31,10 @@
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/custom.css') }}">
+
+    {{-- box icon --}}
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   </head>
   <body id="top">
 

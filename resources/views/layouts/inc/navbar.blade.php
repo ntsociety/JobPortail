@@ -37,7 +37,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid py-1">
-      <a class="navbar-brand ms-5" href="">Job</a>
+      <a class="navbar-brand ms-5" href="{{url('/')}}">Job</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -46,11 +46,8 @@
           <li class="nav-item">
             <a href="{{ route('job_liste') }}" class="nav-link active me-1" aria-current="page" href="#">Jobs</a>
           </li>
-          <li class="nav-item">
-            <a href="{{ route('admin-dashboard') }}" class="nav-link active me-1" aria-current="page" href="#">Dashb</a>
-          </li>
           <li class="nav-item dropdown me-1">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="{{ route('category') }}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Catégories
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -59,7 +56,9 @@
                 @endforeach
             </ul>
           </li>
-
+          <li class="nav-item">
+            <a href="{{ route('candidats') }}" class="nav-link active me-1" aria-current="page" href="#">Candidats</a>
+          </li>
           <!-- Authentication Links -->
           @guest
                 @if (Route::has('login'))
@@ -96,7 +95,7 @@
                         @endif
                         {{-- company route --}}
                         @if(Auth::user()->role == "recruteur")
-                            <a class="dropdown-item" href="{{ route('company-profile') }}">{{ __('Profile') }} </a>
+                            <a class="dropdown-item" href="{{ route('company-dashboard') }}">{{ __('Mon compte') }} </a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();

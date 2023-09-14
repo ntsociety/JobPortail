@@ -17,7 +17,7 @@
 
             <div class="row">
                 <div class="col-md-6 form-group mb-3">
-                    <label for="job-title">Job Title</label>
+                    <label for="job-title">Titre du Job</label>
                     <input type="text" name="title" value="{{ $job->title }}" class="form-control @error('title') is-invalid @enderror" id="job-title" placeholder="Titre de l'offre">
                     @error('title')
                         <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
                 <div class="col-md-6 form-group mb-3">
                     <label for="job-region">Catégorie</label>
                     <select name="cate_id" value="{{ old('cate_id') }}" class="form-select border rounded @error('cate_id') is-invalid @enderror" id="job-region" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Region">
-                        <option value="{{ $job->category->id }}" selected>{{ $job->category->name }}</option>
+                        <option value="{{ $job->category->id }}" selected hidden>{{ $job->category->name }}</option>
                         @foreach ($category as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
@@ -47,7 +47,7 @@
                 <div class="col-md-6 form-group mb-3">
                     <label for="job-region">Job Region</label>
                     <select name="region" class="form-select border rounded @error('region') is-invalid @enderror" id="job-region" data-style="btn-black" data-width="100%" data-live-search="true" title="Sélectionner la région">
-                        <option selected>{{ $job->region }}</option>
+                        <option selected hidden>{{ $job->region }}</option>
                         <option>Lomé</option>
                         <option>Kpalimé</option>
                         <option>Tsévie</option>
@@ -65,7 +65,7 @@
                 <div class="col-md-6 form-group mb-3">
                     <label for="job-type">Job Type</label>
                     <select name="type" class="form-select border rounded @error('type') is-invalid @enderror" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Job Type">
-                        <option selected>{{ $job->type }}</option>
+                        <option selected hidden>{{ $job->type }}</option>
                         <option>A temps partiel</option>
                         <option>A temps plein</option>
                     </select>
@@ -92,7 +92,7 @@
                 <div class="col-md-6 form-group mb-3">
                     <label for="job-type">Experience</label>
                     <select name="experience" class="form-select border rounded @error('experience') is-invalid @enderror" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Years of Experience">
-                        <option selected>{{ $job->experience }}</option>
+                        <option selected hidden>{{ $job->experience }}</option>
                         <option>1-3 années</option>
                         <option>3-6 années</option>
                         <option>6-9 années</option>
@@ -109,7 +109,7 @@
                 <div class="col-md-6 form-group mb-3">
                     <label for="job-type">Salaire</label>
                     <select name="salary" class="form-select border rounded @error('salary') is-invalid @enderror" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Salary">
-                        <option selected>{{ $job->salary }}</option>
+                        <option selected hidden>{{ $job->salary }}</option>
                         <option>50.000 - 100.000F</option>
                         <option>150.000 - 200.000F</option>
                         <option>250.000 - 300.000F</option>
@@ -126,7 +126,7 @@
                 <div class="col-md-6 form-group mb-3">
                     <label for="job-type">Sexe</label>
                     <select name="gender" class="form-select border rounded @error('gender') is-invalid @enderror" id="" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Gender">
-                        <option selected>{{ $job->gender }}</option>
+                        <option selected hidden>{{ $job->gender }}</option>
                         <option>Masculin</option>
                         <option>Feminin</option>
                         <option>tout</option>
@@ -148,11 +148,31 @@
                     </span>
                 @enderror
             </div>
-
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3">
+                        @if ($job->cover)
+                            <a href="{{asset('assets/job/couverture/'.$job->cover)}}">
+                                <img src="{{asset('assets/job/couverture/'.$job->cover)}}"
+                            class="img-fluid" alt="">
+                            </a>
+                        @endif
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <label for="image" class="form-label">Couverture | Facultatif </label>
+                        <input type="file" class="form-control @error('cover') is-invalid @enderror" id="" placeholder="image" name="cover">
+                        @error('cover')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
             <div class="row form-group mb-3">
                 <div class="col-md-12">
                     <label class="text-black" for="">Job Description</label>
-                    <textarea name="description" id="" cols="30" rows="7" class="form-control @error('description') is-invalid @enderror" placeholder="Description de l'offre">{{ $job->description }}</textarea>
+                    <textarea name="description" id="ckeditor" cols="30" rows="7" class="form-control @error('description') is-invalid @enderror" placeholder="Description de l'offre">{!! $job->description !!}</textarea>
                     @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -160,42 +180,7 @@
                     @enderror
                 </div>
             </div>
-
-            <div class="row form-group mb-3">
-                <div class="col-md-12">
-                    <label class="text-black" for="">Responsibilités</label>
-                    <textarea name="responsibilities" id="" cols="30" rows="7" class="form-control @error('responsibilities') is-invalid @enderror" placeholder="Responsibilités...">{{ $job->responsibilities }}</textarea>
-                    @error('responsibilities')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row form-group mb-3">
-                <div class="col-md-12">
-                    <label class="text-black" for="">Education & Experience</label>
-                    <textarea name="education_experience" id="" cols="30" rows="7" class="form-control @error('education_experience') is-invalid @enderror" placeholder="Education & Experience...">{{ $job->education_experience }}</textarea>
-                    @error('education_experience')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row form-group mb-3">
-                <div class="col-md-12">
-                    <label class="text-black" for="">Autres Benifices</label>
-                    <textarea name="other_benifits" id="" cols="30" rows="7" class="form-control @error('other_benifits') is-invalid @enderror" placeholder="Autres Benifices...">{{ $job->other_benifits }}</textarea>
-                    @error('other_benifits')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
+            
             <div class="row form-group mb-3">
                 <div class="col-md-12">
                     <label for="special" class="fw-bold">Cet Offre est toujours Valable ?</label>

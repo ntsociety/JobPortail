@@ -20,7 +20,12 @@ class AdminControlleur extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        $users = User::where('is_admin', '!=', 1)->get();
+        $company = User::where('role', 'recruteur')->get();
+        $diplomes = Employe_profile::where('bio', '!=', null)->get();
+        $job = Job::all();
+        $job_active = Job::where('is_available', 1)->get();
+        return view('admin.index', compact('users', 'company', 'diplomes', 'job', 'job_active'));
     }
     public function diplo_post($slug)
     {

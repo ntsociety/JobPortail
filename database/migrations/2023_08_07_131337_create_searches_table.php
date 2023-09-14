@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('searches', function (Blueprint $table) {
             $table->id();
             $table->string('keyword');
+            $table->boolean('result')->default(1);
             $table->timestamps();
         });
     }

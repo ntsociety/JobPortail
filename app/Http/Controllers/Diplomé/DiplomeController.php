@@ -25,24 +25,24 @@ class DiplomeController extends Controller
     {
         return view('diplome.edit');
     }
-    public function update(DiplomerRequest $request)
+    public function update(Request $request)
     {
         $employ = Employe_profile::find(Auth::id());
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'f_name' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'numeric', 'digits:8'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:employe_profiles'],
             'address'=>['nullable', 'string', 'max:255'],
             'bio'=>['nullable', 'string'],
             'domain'=>['nullable', 'string', 'max:255'],
             'experience_years'=>['nullable', 'string', 'max:255'],
-            'fb_user'=>['nullable', 'string', 'max:255'],
-            'twit_user'=>['nullable', 'string', 'max:255'],
-            'link_user'=>['nullable', 'string', 'max:255'],
+            'facebook'=>['nullable', 'string', 'max:255', 'regex:/^[^\/|\\\]+$/'],
+            'instagram'=>['nullable', 'string', 'max:255', 'regex:/^[^\/|\\\]+$/'],
+            'linkedin'=>['nullable', 'string', 'max:255', 'regex:/^[^\/|\\\]+$/'],
             "photo_profil" => ['nullable', 'image', 'mimes:jpg,png,jpeg,gif,svg', 'max:2048'],
             "cv" => ['nullable', 'file', 'mimes:pdf', 'max:5000'],
         ]);
+        // dd($data);
         if ($request->hasFile('photo_profil'))
         {
             // supprimé l'ancienne photo profile
@@ -81,8 +81,8 @@ class DiplomeController extends Controller
         // update user info
         $user = User::find(Auth::id());
         $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->update();
+       
+
 
         $employ->f_name = $data['f_name'];
         $employ->slug = Str::slug($data['name']);
@@ -92,10 +92,11 @@ class DiplomeController extends Controller
         $employ->domain = $data['domain'];
         $employ->experience_years = $data['experience_years'];
         $employ->fb_user = $data['facebook'];
-        $employ->twit_user = $data['twitter'];
+        $employ->insta_user = $data['instagram'];
         $employ->link_user = $data['linkedin'];
         $employ->update();
-        return redirect()->route('diplome-profile')->with('message', 'Merci pour votre confiance en nous !');
+        $user->update();
+        return redirect()->route('diplome-profile')->with('message', 'Profile mettre à jour avec succes !');
     }
     public function applied()
     {

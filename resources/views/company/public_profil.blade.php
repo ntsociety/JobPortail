@@ -57,9 +57,18 @@
                         <hr>
 
                         <div class="px-3">
-                            <a href="https://www.facebook.com/{{ $profil->fb_url }}" class="pt-3 pb-3 pr-3 pl-0 underline-none"><span class="icon-facebook"></span></a>
-                            <a href="https://www.facebook.com/{{ $profil->twit_url }}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-twitter"></span></a>
-                            <a href="https://www.facebook.com/{{ $profil->link_url }}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
+                            @if ($profil->fb_user)
+                            <a href="https://www.facebook.com/{{$profil->fb_user}}" class="pt-3 pb-3 pr-3 pl-0 underline-none"><span class="icon-facebook"></span></a>
+                            @endif
+                            @if ($profil->insta_user)  
+                            <a href="https://www.instagram.com/{{$profil->insta_user}}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-instagram"></span></a>
+                            @endif
+                            @if ($profil->link_user)
+                            <a href="https://www.linkedin.com/in/{{$profil->link_user}}" class="pt-3 pb-3 pr-3 pl-0"><span class="icon-linkedin"></span></a>
+                            @endif
+                            @if ($profil->site_url)
+                            <a href="https://{{$profil->site_url}}" class="pt-3 pb-3 pr-3 pl-0"><i class='bx bx-link' ></i></a>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -9,51 +9,49 @@
         @if ($job->count() > 0)
             <div class="row mb-5 justify-content-center">
                 <div class="col-md-7 text-center">
-                <h2 class="section-title mb-2">{{ $job->count() }} Job Listed</h2>
+                <h2 class="section-title mb-2">{{ $job->count() }} Emploi répertorié</h2>
                 </div>
             </div>
 
             <ul class="job-listings mb-5">
-                @foreach ($job as $item)
-                    <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-                        <a href="{{ route('single_job',$item->slug) }}"></a>
-                        <div class="job-listing-logo">
-                            <img src="{{ asset('assets/job/couverture/'.$item->cover) }}" alt="Free Website Template by Free-Template.co" class="img-fluid">
-                        </div>
-
-                        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-                            <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                            <h2>{{ $item->title }}</h2>
-                            <strong>Adidas</strong>
-                            </div>
-                            <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                            <span class="icon-room"></span> {{ $item->region }}
-                            </div>
-
-                            <style>
-                                @media (min-width:575px)
-                                {
-                                    .dispo{
-                                        text-align:right;
-                                    }
-                                }
-                            </style>
-                            <div class="job-listing-meta dispo">
-                                @if ($item->type == "Full Time")
-                                <span class="badge badge-success">{{ $item->type }}</span>
-                                @else
-                                <span class="badge badge-danger">{{ $item->type }}</span>
-                                @endif
-                                @if ($item->is_available)
-                                <p><small class="badge badge-info">Disponible</small></p>
-                                @else
-                                <p><small class="badge badge-warning text-black">Non Disponible</small></p>
-                                @endif
+                <div class="row g-5 job_card">
+                    @foreach ($job as $item)
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="p-relative">
+                                    @if ($item->cover)
+                                    <a href="{{ route('single_job',$item->slug) }}"><img src="{{ asset('assets/job/couverture/'.$item->cover) }}" class="img-fluid rounded-start img-thumbnail job_img" alt="..."></a>
+                                    @else
+                                    <a href="{{ route('single_job',$item->slug) }}"><img src="{{ asset('assets/category/couverture/'.$item->category->cover) }}" class="img-fluid rounded-start img-thumbnail job_img" alt="..."></a>
+                                    @endif
+                                    {{-- company --}}
+                                    <a class="text-black" href="{{route('company_public_profile',$item->user->company->slug)}}">
+                                        <img src="{{asset('assets/company/logo/'.$item->user->company->logo)}}" class="img-fluid logo_img_compan" alt="">
+                                    </a>
+                                    <a class="text-black company_name" href="{{route('company_public_profile',$item->user->company->slug)}}"><p class="">{{ $item->user->company->name }}</p></a>
+                                </div>
+                                <div class="ps-2">
+                                    <a href="{{ route('single_job',$item->slug) }}"><h5 class="card-title mt-2">{{ $item->title }}</h5></a>
+                                    <span class="text-small">{{ $item->diplome()->count() }} Diplômé Postulé @if($item->diplome->count() > 1) Diplômés Postulés @endif</span>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div class="">
+                                            <span class="icon-room"></span> {{ $item->region }}
+                                        </div>
+                                        <div class="ms-auto pe-2">
+                                            @if ($item->type == "Full Time")
+                                            <span class="badge badge-success">{{ $item->type }}</span>
+                                            @else
+                                            <span class="badge badge-danger">{{ $item->type }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                    </li>
-                @endforeach
+                    </div>
+                    @endforeach
+                </div>
 
             </ul>
         @else

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('site_url')->nullable();
             $table->string('fb_user')->nullable();
-            $table->string('twit_user')->nullable();
+            $table->string('insta_user')->nullable();
             $table->string('link_user')->nullable();
             $table->string('agrement')->unique()->nullable();
             $table->text('about')->nullable();

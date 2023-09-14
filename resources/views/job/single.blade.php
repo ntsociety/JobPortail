@@ -7,8 +7,8 @@
             <div class="col-md-7">
               <h1 class="text-white font-weight-bold">{{ $job->title }}</h1>
               <div class="custom-breadcrumbs">
-                <a href="#">Home</a> <span class="mx-2 slash">/</span>
-                <a href="#">Job</a> <span class="mx-2 slash">/</span>
+                <a href="{{url('/')}}">Accueil</a> <span class="mx-2 slash">/</span>
+                <a href="{{route('job_liste')}}">Emplois</a> <span class="mx-2 slash">/</span>
                 <span class="text-white"><strong>{{ $job->title }}</strong></span>
               </div>
             </div>
@@ -36,7 +36,7 @@
                 <div>
                 <h2>{{ $job->title }}</h2>
                 <div>
-                    <span class="ml-0 mr-2 mb-2"><span class="icon-briefcase mr-2"></span>{{ $job->user->company->name }}</span>
+                    <span class="ml-0 mr-2 mb-2"><span class="icon-briefcase mr-2"></span><a href="{{route('company_public_profile',$job->user->company->slug)}}">{{ $job->user->company->name }}</a></span>
                     <span class="m-2"><span class="icon-room mr-2"></span>{{ $job->region }}</span>
                     <span class="m-2"><span class="icon-clock-o mr-2"></span><span class="text-primary">{{ $job->type }}</span></span>
                 </div>
@@ -47,11 +47,15 @@
         <div class="row">
             <div class="col-lg-8">
             <div class="mb-5">
+                @if ($job->cover)
+                <figure class="mb-5"><img src="{{ asset('assets/job/couverture/'.$job->cover) }}" alt="Image" class="img-fluid rounded"></figure>
+                @else
                 <figure class="mb-5"><img src="{{ asset('assets/category/couverture/'.$job->category->cover) }}" alt="Image" class="img-fluid rounded"></figure>
+                @endif
                 <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Job Description</h3>
-                <p>{{ $job->description }}</p>
+                <p>{!! $job->description !!}</p>
             </div>
-            <div class="mb-5">
+            {{-- <div class="mb-5">
                 <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-rocket mr-3"></span>Responsibilities</h3>
                 <p>{{ $job->responsibilities }}</p>
             </div>
@@ -64,22 +68,11 @@
             <div class="mb-5">
                 <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-turned_in mr-3"></span>Other Benifits</h3>
                 <p>{{ $job->other_benifits }}</p>
-            </div>
+            </div> --}}
 
             <div class="row mb-5">
-                <div class="col-6">
-                    @if ($saved)
-                    <button class="btn btn-block btn-light btn-md" disabled type="submit"><i class="icon-heart"></i>Déjà enregistré</button>
-                    @else
-                    <form action="{{ route('save_job',$job->id) }}" method="post">
-                        @csrf
-                        <button class="btn btn-block btn-light btn-md" type="submit"><i class="icon-heart"></i>enregistré</button>
-                    </form>
-                    @endif
-                <!--add text-danger to it to make it read-->
-                </div>
                 @if ($applied)
-                <div class="col-6">
+                <div class="col-12">
                     <a href="" class="btn btn-block btn-primary btn-md disabled">Déjà Postulé</a href="{{ route('post_job',$job) }}">
                 </div>
                 @else
@@ -92,23 +85,23 @@
             </div>
             <div class="col-lg-4">
             <div class="bg-light p-3 border rounded mb-4">
-                <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Job Summary</h3>
+                <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Résumé du poste</h3>
                 <ul class="list-unstyled pl-3 mb-0">
-                <li class="mb-2"><strong class="text-black">Published on :</strong> {{ $job->created_at }}</li>
-                <li class="mb-2"><strong class="text-black">Vacancy :</strong> {{ $job->vacancy }}</li>
-                <li class="mb-2"><strong class="text-black">Employment Status :</strong> {{ $job->type }}</li>
-                <li class="mb-2"><strong class="text-black">Experience :</strong> {{ $job->experience }}</li>
-                <li class="mb-2"><strong class="text-black">Job Location :</strong> {{ $job->region }}</li>
-                <li class="mb-2"><strong class="text-black">Salary :</strong> {{ $job->salary }}</li>
-                <li class="mb-2"><strong class="text-black">Gender :</strong> {{ $job->gender }}</li>
-                <li class="mb-2"><strong class="text-black">Application Deadline :</strong> {{ $job->apps_deadline }}</li>
+                <li class="mb-2"><strong class="text-black">Publié le :</strong> {{ $job->created_at }}</li>
+                <li class="mb-2"><strong class="text-black">Nombre de postes :</strong> {{ $job->vacancy }}</li>
+                <li class="mb-2"><strong class="text-black">Statut d'emploi :</strong> {{ $job->type }}</li>
+                <li class="mb-2"><strong class="text-black">Expérience :</strong> {{ $job->experience }}</li>
+                <li class="mb-2"><strong class="text-black">lieu de travail :</strong> {{ $job->region }}</li>
+                <li class="mb-2"><strong class="text-black">Salaire :</strong> {{ $job->salary }}</li>
+                <li class="mb-2"><strong class="text-black">Genre :</strong> {{ $job->gender }}</li>
+                <li class="mb-2"><strong class="text-black">Date limite d'inscription :</strong> {{ $job->apps_deadline }}</li>
                 <li class="mb-2"><strong class="text-black">Déjà postulé :</strong> {{ $job->diplome->count() }} Diplômé@if($job->diplome->count() > 1)s @endif
                 </li>
                 </ul>
             </div>
 
             <div class="bg-light p-3 border rounded">
-                <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Share</h3>
+                <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Partager</h3>
                 <div class="px-3">
                     {{-- <a href="https://www.facebook.com/sharer/sharer.php?u=#url" target="_blank">
                         Share
@@ -139,50 +132,49 @@
 
             <div class="row mb-5 justify-content-center">
                 <div class="col-md-7 text-center">
-                <h2 class="section-title mb-2">{{ $job_relat->count() }} Related Jobs</h2>
+                <h2 class="section-title mb-2">{{ $job_relat->count() }} Emplois connexes</h2>
                 </div>
             </div>
 
             <ul class="job-listings mb-5">
-                @foreach ($job_relat as $item)
-                    <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
-                        <a href="{{ route('single_job',$item->slug) }}"></a>
-                        <div class="job-listing-logo">
-                            <img src="{{ asset('assets/job/couverture/'.$item->cover) }}" alt="Image" class="img-fluid">
+                <div class="row g-5 job_card">
+                    @foreach ($job_relat as $item)
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="p-relative">
+                                    @if ($item->cover)
+                                    <a href="{{ route('single_job',$item->slug) }}"><img src="{{ asset('assets/job/couverture/'.$item->cover) }}" class="img-fluid rounded-start img-thumbnail job_img" alt="..."></a>
+                                    @else
+                                    <a href="{{ route('single_job',$item->slug) }}"><img src="{{ asset('assets/category/couverture/'.$item->category->cover) }}" class="img-fluid rounded-start img-thumbnail job_img" alt="..."></a>
+                                    @endif
+                                    {{-- company --}}
+                                    <a class="text-black" href="{{route('company_public_profile',$item->user->company->slug)}}">
+                                        <img src="{{asset('assets/company/logo/'.$item->user->company->logo)}}" class="img-fluid logo_img_compan" alt="">
+                                    </a>
+                                    <a class="text-black company_name" href="{{route('company_public_profile',$item->user->company->slug)}}"><p class="">{{ $item->user->company->name }}</p></a>
+                                </div>
+                                <div class="ps-2">
+                                    <a href="{{ route('single_job',$item->slug) }}"><h5 class="card-title mt-2">{{ $item->title }}</h5></a>
+                                    <span class="text-small">{{ $item->diplome()->count() }} Diplômé Postulé @if($item->diplome->count() > 1) Diplômés Postulés @endif</span>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div class="">
+                                            <span class="icon-room"></span> {{ $item->region }}
+                                        </div>
+                                        <div class="ms-auto pe-2">
+                                            @if ($item->type == "Full Time")
+                                            <span class="badge badge-success">{{ $item->type }}</span>
+                                            @else
+                                            <span class="badge badge-danger">{{ $item->type }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
-                            <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
-                            <h2>{{ $item->title }}</h2>
-                            <strong>{{ $item->company }}</strong>
-                            </div>
-                            <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
-                            <span class="icon-room"></span> {{ $item->region }}
-                            <style>
-                                @media (min-width:575px)
-                                {
-                                    .dispo{
-                                        text-align:right;
-                                    }
-                                }
-                            </style>
-                            </div>
-                            <div class="job-listing-meta dispo">
-                                @if ($item->type == "Full Time")
-                                <span class="badge badge-success">{{ $item->type }}</span>
-                                @else
-                                <span class="badge badge-danger">{{ $item->type }}</span>
-                                @endif
-                                @if ($item->is_available)
-                                <p><small class="badge badge-info">Disponible</small></p>
-                                @else
-                                <p><small class="badge badge-warning text-black">Non Disponible</small></p>
-                                @endif
-                            </div>
-                        </div>
-
-                    </li>
-                @endforeach
+                    </div>
+                    @endforeach
+                </div>
 
             </ul>
 

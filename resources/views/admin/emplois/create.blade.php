@@ -91,7 +91,7 @@
                 <div class="col-md-6 form-group mb-3">
                     <label for="job-type">Experience</label>
                     <select name="experience" class="form-select border rounded @error('experience') is-invalid @enderror" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Years of Experience">
-                        <option selected hidden disabled>Sélectionner l'année</option>
+                        <option selected hidden value="non définie">Sélectionner l'année</option>
                         <option>1-3 années</option>
                         <option>3-6 années</option>
                         <option>6-9 années</option>
@@ -106,9 +106,9 @@
 
            <div class="row">
                 <div class="col-md-6 form-group mb-3">
-                    <label for="job-type">Salaire</label>
+                    <label for="job-type">Salaire | Facultatif</label>
                     <select name="salary" class="form-select border rounded @error('salary') is-invalid @enderror" id="job-type" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Salary">
-                        <option selected hidden disabled>Estimation de salaire</option>
+                        <option value="Non Défini" selected hidden>Estimation de salaire</option>
                         <option>50.000 - 100.000F</option>
                         <option>150.000 - 200.000F</option>
                         <option>250.000 - 300.000F</option>
@@ -125,7 +125,7 @@
                 <div class="col-md-6 form-group mb-3">
                     <label for="job-type">Sexe</label>
                     <select name="gender" class="form-select border rounded @error('gender') is-invalid @enderror" id="" data-style="btn-black" data-width="100%" data-live-search="true" title="Select Gender">
-                        <option value="tout" selected>Sélectionner le sexe</option>
+                        <option value="tout" selected hidden>Sélectionner le sexe</option>
                         <option>Masculin</option>
                         <option>Feminin</option>
                         <option>tout</option>
@@ -147,11 +147,20 @@
                     </span>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Couverture | Facultatif </label>
+                <input type="file" class="form-control @error('cover') is-invalid @enderror" id="" placeholder="image" name="cover">
+                  @error('cover')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror
+            </div>
 
             <div class="row form-group mb-3">
                 <div class="col-md-12">
-                    <label class="text-black" for="">Job Description</label>
-                    <textarea name="description" id="" cols="30" rows="7" class="form-control @error('description') is-invalid @enderror" placeholder="Description de l'offre">{{ old('description') }}</textarea>
+                    <label class="text-black" for="">Description du Job</label>
+                    <textarea name="description" id="ckeditor" cols="30" rows="7" class="form-control @error('description') is-invalid @enderror" placeholder="Description de l'offre">{{ old('description') }}</textarea>
                     @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -160,7 +169,7 @@
                 </div>
             </div>
 
-            <div class="row form-group mb-3">
+            {{-- <div class="row form-group mb-3">
                 <div class="col-md-12">
                     <label class="text-black" for="">Responsibilités</label>
                     <textarea name="responsibilities" id="" cols="30" rows="7" class="form-control @error('responsibilities') is-invalid @enderror" placeholder="Responsibilités...">{{ old('responsibilities') }}</textarea>
@@ -170,9 +179,9 @@
                         </span>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="row form-group mb-3">
+            {{-- <div class="row form-group mb-3">
                 <div class="col-md-12">
                     <label class="text-black" for="">Education & Experience</label>
                     <textarea name="education_experience" id="" cols="30" rows="7" class="form-control @error('education_experience') is-invalid @enderror" placeholder="Education & Experience...">{{ old('education_experience') }}</textarea>
@@ -182,11 +191,11 @@
                         </span>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="row form-group mb-3">
+            {{-- <div class="row form-group mb-3">
                 <div class="col-md-12">
-                    <label class="text-black" for="">Autres Benifices</label>
+                    <label class="text-black" for="">Autres Benifices | Facultatif</label>
                     <textarea name="other_benifits" id="" cols="30" rows="7" class="form-control @error('other_benifits') is-invalid @enderror" placeholder="Autres Benifices...">{{ old('other_benifits') }}</textarea>
                     @error('other_benifits')
                         <span class="invalid-feedback" role="alert">
@@ -194,17 +203,13 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="image" class="form-label">Couverture </label>
-                <input type="file" class="form-control @error('cover') is-invalid @enderror" id="" placeholder="image" name="cover">
-                  @error('cover')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
-              </div>
+            </div> --}}
+            
             <!--company details-->
+
+            {{-- <textarea id="ckeditor" name="description" placeholder="Description" class="form-control no-resize @error('description') is-invalid @enderror" required>
+                {{ old('description') }}
+            </textarea> --}}
 
             <button type="submit" name="submit" class="btn btn-block btn-primary btn-md" value="Save Job">Ajouter</button>
 

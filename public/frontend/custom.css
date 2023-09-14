@@ -1,0 +1,49 @@
+.site-section{
+    padding: 0 0;
+    margin: 50px 0;
+  }
+  /* job liste card */
+  .job_card .job_img{
+    height: 170px;
+    width: 100% !important;
+    object-fit: cover;
+    border-radius: 15px;
+}
+.job_card .card{
+    border: none !important;
+}
+.job_card .card-body{
+    padding: 0 !important;
+}
+.job_card .p-relative{
+    position: relative;
+}
+.job_card .logo_img_compan{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 2px solid black;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+.job_card .company_name{
+    position: absolute;
+    bottom: 6px;
+    right: 5px;
+    
+}
+.job_card .company_name p{
+    margin-bottom: 0 !important;
+    padding: 0 4px;
+    background-color: rgb(10, 103, 241);
+    border-radius: 5px;
+    color: white;
+}
+.job_card .text-small{
+    font-size: 13px;
+}
+.job_card .d-flex{
+    display: flex;
+}

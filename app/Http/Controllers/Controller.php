@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employe_profile;
 use App\Models\Job;
 use App\Models\SaveJob;
 use App\Models\User;
@@ -31,6 +32,11 @@ class Controller extends BaseController
         // $pdfPath = public_path('assets/diplomé/cv/'.Auth::user()->diplome->cv);
         // dd($pdfPath);
         return view('pdf_view');
+    }
+    public function candidats()
+    {
+        $candidats = Employe_profile::where('bio', '!=', null)->get();
+        return view('candidats', compact('candidats'));
     }
 
 }

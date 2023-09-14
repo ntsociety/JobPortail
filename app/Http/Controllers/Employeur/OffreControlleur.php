@@ -50,7 +50,10 @@ class OffreControlleur extends Controller
             $file->move('assets/job/couverture/',$imageName);
             $job->cover = $imageName;
         }
-
+        if(Category::where('id', $data['cate_id'])->exists())
+        {
+            $job->cate_id = $data['cate_id'];
+        }
         $job->title = $data['title'];
         // $job->title = $data['campany'];
         $job->slug = Str::slug($data['title']);
@@ -62,9 +65,9 @@ class OffreControlleur extends Controller
         $job->gender = $data['gender'];
         $job->apps_deadline = $data['apps_deadline'];
         $job->description = $data['description'];
-        $job->responsibilities = $data['responsibilities'];
-        $job->education_experience = $data['education_experience'];
-        $job->other_benifits = $data['other_benifits'];
+        // $job->responsibilities = $data['responsibilities'];
+        // $job->education_experience = $data['education_experience'];
+        // $job->other_benifits = $data['other_benifits'];
         $job->save();
         return redirect()->route('offres.index')->with('message', 'offre ajouté avec succès!');
     }
@@ -94,31 +97,51 @@ class OffreControlleur extends Controller
     public function update(OffreRequest $request, $slug)
     {
         $job = Job::where('slug', $slug)->where('user_id', Auth::id())->firstOrFail();
-         $data = $request->validated();
+        if($job->user_id == Auth::id())
+        {
+            $data = $request->validated();
             // dd($data);
+            if ($request->hasFile('cover'))
+            {
+                if($job->cover)
+                {
+                    $path = "assets/job/couverture/".$job->cover;
+                    unlink($path);
+                }
+                // dd($data['cover']);
+                $file = $data['cover'];
+                // $ext = $file->getClientOriginalExtension();
+                $imageName=date('d-m-Y').'_'.$file->getClientOriginalName();
+                // $filename = time().'.'.$ext;
+                $file->move('assets/job/couverture/',$imageName);
+                $job->cover = $imageName;
+            }
 
-
-        $job->title = $data['title'];
-        $job->cate_id = $data['cate_id'];
-        // $job->title = $data['campany'];
-        $job->slug = Str::slug($data['title']);
-        $job->region = $data['region'];
-        $job->type = $data['type'];
-        $job->vacancy = $data['vacancy'];
-        $job->experience = $data['experience'];
-        $job->salary = $data['salary'];
-        $job->gender = $data['gender'];
-        $job->apps_deadline = $data['apps_deadline'];
-        $job->description = $data['description'];
-        $job->responsibilities = $data['responsibilities'];
-        $job->education_experience = $data['education_experience'];
-        $job->other_benifits = $data['other_benifits'];
-        $job->is_available = $request->input('is_available') == True ? '1':'0';
-        $job->update();
-        return redirect()->route('offres.index')->with('message', 'offre Modifié avec succès!');
-
-
-
+            $job->title = $data['title'];
+            if(Category::where('id', $data['cate_id'])->exists())
+            {
+                $job->cate_id = $data['cate_id'];
+            }
+            // $job->title = $data['campany'];
+            $job->slug = Str::slug($data['title']);
+            $job->region = $data['region'];
+            $job->type = $data['type'];
+            $job->vacancy = $data['vacancy'];
+            $job->experience = $data['experience'];
+            $job->salary = $data['salary'];
+            $job->gender = $data['gender'];
+            $job->apps_deadline = $data['apps_deadline'];
+            $job->description = $data['description'];
+            // $job->responsibilities = $data['responsibilities'];
+            // $job->education_experience = $data['education_experience'];
+            // $job->other_benifits = $data['other_benifits'];
+            $job->is_available = $request->input('is_available') == True ? '1':'0';
+            $job->update();
+            return redirect()->route('offres.index')->with('message', 'offre Modifié avec succès!');
+        }else{
+            return redirect()->back()->with('status', "action non autorisée");
+        }
+         
     }
 
     /**
