@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('company_profiles')->onDelete('cascade');
             $table->foreign('diplomer_id')->references('id')->on('employe_profiles')->onDelete('cascade');
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
+            $table->foreign('job_id')->references('id')->on('job')->onDelete('cascade');
         });
     }
 

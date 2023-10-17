@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminControlleur;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EmploisController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Diplomé\DiplomeController;
 use App\Http\Controllers\Employeur\CompanyController;
 use App\Http\Controllers\Employeur\OffreControlleur;
@@ -88,8 +89,10 @@ Route::resource('job', JobController::class);
 // save and apply
 Route::middleware(['auth'])->group(function(){
     // devenir employeur
-    Route::get('devenir-employeur', [CompanyController::class, 'become'])->name('become-company');
-    Route::post('devenir-employeur-store', [CompanyController::class, 'store'])->name('become-company-store');
+    route::middleware('verified')->group(function(){
+        Route::get('devenir-employeur', [CompanyController::class, 'become'])->name('become-company');
+        Route::post('devenir-employeur-store', [CompanyController::class, 'store'])->name('become-company-store');
+    });
 
     Route::post('/save_job/{id}', [JobControlleur::class, 'save_job'])->name('save_job');
     Route::get('/postulé-job/{slug}', [JobControlleur::class, 'post_job'])->name('post_job');
@@ -99,8 +102,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('candidats', [App\Http\Controllers\Controller::class, 'candidats'])->name('candidats');
 
 
-});
+    // route account verify
+    route::get('account-verify', [Controller::class, 'verify_account'])->name('verification.notice');
 
+});    
 
 
 
@@ -166,6 +171,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('{slug}/profile-public', [CompanyController::class, 'prof_public'])->name('company_public_profile');
 
 });
+
+
 
 
 // google login

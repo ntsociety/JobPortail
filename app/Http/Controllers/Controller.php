@@ -19,8 +19,9 @@ class Controller extends BaseController
     {
         $company = User::where('role', "recruteur")->get();
         $diplome = User::where('role', "user")->get();
+        $recent_job = Job::orderBy('created_at', 'desc')->take(10)->get();
         $job = Job::all();
-        return view('index', compact('company', 'diplome', 'job'));
+        return view('index', compact('company', 'diplome', 'recent_job', 'job'));
     }
     public function job_liste()
     {
@@ -37,6 +38,15 @@ class Controller extends BaseController
     {
         $candidats = Employe_profile::where('bio', '!=', null)->get();
         return view('candidats', compact('candidats'));
+    }
+    public function verify_account()
+    {
+        if(Auth::user()->email_verified_at == null)
+        {
+            return view('verify_account');
+        }else {
+            return redirect()->back();
+        }
     }
 
 }

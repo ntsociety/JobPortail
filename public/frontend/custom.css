@@ -47,3 +47,15 @@
 .job_card .d-flex{
     display: flex;
 }
+.job-card-title{
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+.job_card-campany-name{
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

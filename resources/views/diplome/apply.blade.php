@@ -16,11 +16,11 @@
     <div class="container">
       <div class="row">
         <div class="col-md-7">
-          <h1 class="text-white font-weight-bold">Diplômé | Modifier Votre profile</h1>
+          <h1 class="text-white font-weight-bold">Diplômé | Postuler</h1>
           <div class="custom-breadcrumbs">
-            <a href="#">Home</a> <span class="mx-2 slash">/</span>
-            <a href="#">Job</a> <span class="mx-2 slash">/</span>
-            <span class="text-white"><strong>Post a Job</strong></span>
+            <a href="{{url('/')}}">Accueil</a> <span class="mx-2 slash">/</span>
+            <a href="{{route('job_liste')}}">Offres</a> <span class="mx-2 slash">/</span>
+            <span class="text-white"><strong>Postuler</strong></span>
           </div>
         </div>
       </div>
@@ -34,9 +34,9 @@
         <div class="col-lg-8 mb-4 mb-lg-0">
           <div class="d-flex align-items-center">
             <div>
-              <h2>Offre | Postulé
-                <a href="{{ route('diplome-profile-edit') }}" class="btn btn-info btn-sm">Votre profile</a >
-              </h2>
+              <h4>Vous pouvez modifier votre profile avant de postuler
+                <a href="{{ route('diplome-profile-edit') }}" class="btn btn-info btn-sm ms-2">Votre profile</a >
+              </h4>
             </div>
           </div>
         </div>

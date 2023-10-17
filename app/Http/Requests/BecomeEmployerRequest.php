@@ -36,11 +36,12 @@ class BecomeEmployerRequest extends FormRequest
             'instagram'=>['nullable', 'string', 'max:255'],
             'linkedin'=>['nullable', 'string', 'max:255'],
             'domain'=>['required', 'string', 'max:255'],
+            "logo" => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
         ];
         if($this->getMethod() == "POST")
         {
             $rules += [
-                "logo" => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
+                "logo" => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
             ];
         }
         if($this->getMethod() == "PUT")
@@ -62,7 +63,7 @@ class BecomeEmployerRequest extends FormRequest
         if($this->getMethod() == "POST")
         {
             $rules += [
-                'agrement' =>['required', 'string', 'min:29', 'max:29'],
+                'agrement' =>['nullable', 'string', 'min:29', 'max:29'],
             ];
         }
         

@@ -132,7 +132,13 @@
 
             <div class="row mb-5 justify-content-center">
                 <div class="col-md-7 text-center">
-                <h2 class="section-title mb-2">{{ $job_relat->count() }} Emplois connexes</h2>
+                <h2 class="section-title mb-2">
+                    @if ($job_relat->count() > 1)
+                    {{ $job_relat->count() }} Emplois similaires
+                    @else
+                    {{ $job_relat->count() }} Emploi similaire
+                    @endif
+                </h2>
                 </div>
             </div>
 

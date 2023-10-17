@@ -6,7 +6,7 @@
     </div>
     <ul class="nav-links">
       <li>
-        <a href="#" class="active">
+        <a href="{{route('admin-dashboard')}}" class="active">
           <i class='bx bxs-dashboard' ></i>
           <span class="links_name">Dashboard</span>
         </a>

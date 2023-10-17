@@ -26,7 +26,10 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        return view('company.index');
+        $job = Job::where('user_id', Auth::id())->get();
+        $diplomes = Apply::where('company_id', Auth::id())->get();
+        $job_active = Job::where('is_available', 1)->where('user_id', Auth::id())->get();
+        return view('company.index', compact('job', 'job_active', 'diplomes'));
     }
     public function become()
     {

@@ -9,7 +9,13 @@
         @if ($job->count() > 0)
             <div class="row mb-5 justify-content-center">
                 <div class="col-md-7 text-center">
-                <h2 class="section-title mb-2">{{ $job->count() }} Emploi répertorié</h2>
+                <h2 class="section-title mb-2">
+                    @if ($job->count()>1)
+                    {{ $job->count() }} Emplois répertoriés pour {{ $search_text }} 
+                    @else
+                    {{ $job->count() }} Emploi répertorié pour {{ $search_text }}
+                    @endif
+                </h2>
                 </div>
             </div>
 
